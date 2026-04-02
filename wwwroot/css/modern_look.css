@@ -1,0 +1,263 @@
+/* Table Wrapper */
+.table-wrapper {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* DataTable Custom Styling */
+#tblCustomerInfo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border: none;
+}
+
+/* Header Styling */
+#tblCustomerInfo thead th {
+    background: linear-gradient(135deg, #17A2B8 0%, #138496 100%);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px 12px;
+    border: none;
+    text-align: left;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+#tblCustomerInfo thead th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+#tblCustomerInfo thead th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+/* Body Styling */
+#tblCustomerInfo tbody td {
+    padding: 12px;
+    font-size: 13px;
+    color: #333;
+    border-bottom: 1px solid #e9ecef;
+    border-left: none;
+    border-right: none;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+}
+
+/* Alternating Row Colors */
+#tblCustomerInfo tbody tr {
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+#tblCustomerInfo tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Hover Effect */
+#tblCustomerInfo tbody tr:hover {
+    background: linear-gradient(90deg, #e3f4f7 0%, #d1eef3 100%);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.15);
+    cursor: pointer;
+}
+
+#tblCustomerInfo tbody tr:hover td {
+    color: #0c5460;
+}
+
+/* Link Styling */
+#tblCustomerInfo a {
+    color: #17A2B8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+#tblCustomerInfo a:hover {
+    color: #138496;
+    text-decoration: underline;
+}
+
+#tblCustomerInfo tbody tr:hover a {
+    color: #0c5460;
+}
+
+/* DataTables Controls Styling */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 6px 30px 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 13px;
+    transition: border-color 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_length select:focus {
+    outline: none;
+    border-color: #17A2B8;
+    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    outline: none;
+    border-color: #17A2B8;
+    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
+}
+
+/* Pagination Styling */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    color: #333 !important;
+    transition: all 0.2s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #17A2B8;
+    color: #fff !important;
+    border-color: #17A2B8;
+    transform: translateY(-1px);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: linear-gradient(135deg, #17A2B8 0%, #138496 100%);
+    color: #fff !important;
+    border-color: #17A2B8;
+    font-weight: 600;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Info Text */
+.dataTables_wrapper .dataTables_info {
+    font-size: 13px;
+    color: #666;
+    padding-top: 10px;
+}
+
+/* Sorting Icons */
+#tblCustomerInfo thead th.sorting,
+#tblCustomerInfo thead th.sorting_asc,
+#tblCustomerInfo thead th.sorting_desc {
+    cursor: pointer;
+}
+
+#tblCustomerInfo thead th.sorting:after,
+#tblCustomerInfo thead th.sorting_asc:after,
+#tblCustomerInfo thead th.sorting_desc:after {
+    opacity: 0.7;
+    margin-left: 8px;
+}
+
+/* No Sort Columns */
+#tblCustomerInfo thead th.no-sort {
+    cursor: default;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .table-wrapper {
+        padding: 10px;
+    }
+    
+    #tblCustomerInfo thead th,
+    #tblCustomerInfo tbody td {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+/* Loading Overlay */
+.dataTables_processing {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #17A2B8;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 14px;
+    color: #17A2B8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Action Buttons in Table */
+#tblCustomerInfo .btn-action {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    margin: 0 2px;
+    transition: all 0.2s ease;
+}
+
+#tblCustomerInfo .btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Smooth Scrollbar */
+.panel-height {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.panel-height::-webkit-scrollbar {
+    width: 8px;
+}
+
+.panel-height::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.panel-height::-webkit-scrollbar-thumb {
+    background: #17A2B8;
+    border-radius: 10px;
+}
+
+.panel-height::-webkit-scrollbar-thumb:hover {
+    background: #138496;
+}

@@ -1,0 +1,79 @@
+<div class="wrapper">
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5>Transaction List</h5>
+                </div>
+                <div class="col-md-4 pull-right">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">AccAccount: </label>
+                        <div class="col-sm-10">
+                            <select id="AccAccountId" style="width: 100%;" asp-items="@ViewBag.ddlAccAccount"
+                                onchange="GetAccAccountWiseTransaction()" class="form-control" required>
+                                <option value="0" selected>All Account</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body scroll panel-height">
+            <table id="tblAccTransaction" class="ItemTranTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Account</th>
+                        <th>Type</th>
+                        <th>Reference</th>
+                        <th>Credit</th>
+                        <th>Debit</th>
+                        <th>Amount</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 5px;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+</style>
+
+<script src="~/js/AccTransaction/AccTransaction_CRUD.js"></script>
+<script src="~/js/AccTransaction/AccTransaction_Datatable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#AccAccountId").select2();
+        DataTableCustomSearchBox('350px', 'Search...');
+    });
+
+    var GetAccAccountWiseTransaction = function () {
+        var _AccAccountId = $("#AccAccountId").val();
+
+        var _tblAccTransaction = $("#tblAccTransaction").DataTable();
+        _tblAccTransaction.clear();
+        _tblAccTransaction.destroy();
+        if (_AccAccountId == 0) {
+            LoadAccTransactionDataTable(false, 0);
+        }
+        else {
+            LoadAccTransactionDataTable(true, _AccAccountId);
+        }
+        DataTableCustomSearchBox('350px', 'Search...');
+    }
+</script>

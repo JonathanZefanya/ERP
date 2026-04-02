@@ -1,0 +1,130 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-2">
+            <select id="IncomeTypeId" style="width: 100%;" onchange="DisplayIncomeSummaryData()" class="form-control"
+                required>
+                <option value="0" selected>All Type</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select id="IncomeCategoryId" style="width: 100%;" onchange="DisplayIncomeSummaryData()"
+                class="form-control" required>
+                <option value="0" selected>All Category</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-sm-3">
+            <div class="">
+                <label>Start Date:</label>
+                <input type="date" id="StartDate" class="" required>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="f">
+                <label>End Date:</label>
+                <input type="date" id="EndDate" class="" required>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="">
+                <label></label>
+                <button class="btn btn-sm btn-success" id="btnSubmit"
+                    onclick="CustomRangeDataFilter()">Submit</button>
+                <a href="/IncomeSummaryReport/Index" type="button" class=" btn btn-sm btn-danger" />Reset</a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <label>Showing: @ViewBag.StartDate to @ViewBag.EndDate</label>
+        </div>
+    </div>
+
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-5">
+                    <a class="fa fa-plus-square fa-2x" onclick="AddEdit(0)"></a>
+                </div>
+                <div class="col-md-7 pull-right">
+                    <h5 class="pull-right"><b>&nbsp;Income Summary Report</b></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body scroll panel-height">
+            <table id="tblIncomeSummaryReport" class="ReportTheme" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Income Date</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 5px;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+</style>
+
+<script src="~/js/IncomeSummaryReport/IncomeSummaryReport_Datatable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var _url = "/IncomeType/GetAllType";
+        GetDropDownDataBase("IncomeTypeId", _url);
+        $("#IncomeTypeId").select2();
+
+        var _url = "/IncomeCategory/GetAllCategory";
+        GetDropDownDataBase("IncomeCategoryId", _url);
+        $("#IncomeCategoryId").select2();
+    });
+
+    var DisplayIncomeSummaryData = function () {
+        var _tblIncomeSummaryReport = $("#tblIncomeSummaryReport").DataTable();
+        _tblIncomeSummaryReport.clear();
+        _tblIncomeSummaryReport.destroy();
+
+        var _IncomeTypeId = $("#IncomeTypeId").val();
+        var _IncomeCategoryId = $("#IncomeCategoryId").val();
+
+        GetDatatableData(_IncomeTypeId, _IncomeCategoryId);
+        DataTableCustomSearchBox('450px', 'Search...');
+    }
+
+    var ResetSummaryReport = function () {
+        location.href = "/IncomeSummaryReport/Index";
+    }
+</script>

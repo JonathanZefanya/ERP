@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="wrapper">
+    <div class="row" style="margin: 15px auto;">
+        <div class="col-sm-6">
+            <h2 style="color:#000;font-weight:bold">
+                System Settings
+            </h2>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id="SystemSettingsSearch" onkeyup="SearchSystemSettings()"
+                placeholder="Please enter a search term.." class="col-sm-12 form-control">
+        </div>
+    </div>
+    <hr />
+
+    <partial name="_AllItems" />
+    <br /><br /><br /><br /><br /><br />
+</div>
+
+
+<script>
+    var SearchSystemSettings = function () {
+        var _SystemSettingsSearch = document.getElementById("SystemSettingsSearch");
+        var divFilter = _SystemSettingsSearch.value.toLowerCase();
+        var listdivSearchSS = document.getElementsByClassName('divSearchSS');
+
+        for (i = 0; i < listdivSearchSS.length; i++) {
+            if (listdivSearchSS[i].innerText.toLowerCase().includes(divFilter)) {
+                listdivSearchSS[i].style.display = "block";
+            } else {
+                listdivSearchSS[i].style.display = "none";
+            }
+        }
+    }
+</script>

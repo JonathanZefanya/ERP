@@ -1,0 +1,95 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-footer text-right">
+                <button class="btn btn-info" onclick="printDivSSS('divPrintCustomerReport','BlueGreen')"><span
+                        class="fa fa-print"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6 pull-right">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Customer: </label>
+                <div class="col-sm-10">
+                    <select id="CustomerId" style="width: 100%;" onchange="GetByCustomerReport(this.value)"
+                        class="form-control" required>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divPrintCustomerReport">
+        <div class="row">
+            <div class="col-md-6">
+                <span><b>Name: </b></span><span id="CustomerName"></span> <br />
+                <span><b>Address: </b></span><span id="CustomerAddress"></span> <br />
+                <span><b>Report Date: </b></span><span id="ReportDate"></span> <br />
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+
+        <h4>Customer Report</h4>
+        <hr />
+
+        <table id="tblCustomerReport" class="BlueGreen Table5xMargin" border="1" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Created Date</th>
+                    <th>Invoice No</th>
+                    <th>Reference Number</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Sub Quantity</th>
+                    <th>Item Price</th>
+                    <th>Discount</th>
+                    <th>Sub Total</th>
+                    <th>Grand Total</th>
+                    <th>Paid Amount</th>
+                    <th>Due Amount</th>
+                </tr>
+            <tbody></tbody>
+            </thead>
+        </table>
+        <hr />
+        <h4 id="NoDataMessage"></h4>
+        <style>
+            h4 {
+                text-align: center;
+            }
+        </style>
+    </div>
+</div>
+
+<script src="~/js/CustomerSalesReport/ReportData.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var _url = "/CustomerSalesReport/GetAllReportCustomer";
+        GetDropDownDataBase("CustomerId", _url);
+        $("#CustomerId").select2();
+    });
+
+    setTimeout(function () {
+        var _CustomerId = $("#CustomerId").val();
+        GetByCustomerReport(1);
+    }, 300);
+
+
+    var printDivSSS = function (divName, RemoveCssClass) {
+        $("table").removeClass(RemoveCssClass);
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        window.location.reload();
+    }
+</script>

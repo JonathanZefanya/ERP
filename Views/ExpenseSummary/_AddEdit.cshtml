@@ -1,0 +1,148 @@
+﻿@model BusinessERP.Models.ExpenseSummaryViewModel.ExpenseSummaryCRUDViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col-md-12">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div hidden>
+        <label id="ExpenseSummaryId">@Model.Id</label>
+        <input asp-for="Action" id="Action" />
+        <input asp-for="CreatedDate" id="CreatedDate" />
+        <input asp-for="CreatedBy" id="CreatedBy" />
+        <input asp-for="CurrentURL" id="CurrentURL" />
+        <input asp-for="RoleName" id="RoleName" />
+    </div>
+
+    <div class="card card-primary card-outline card-tabs">
+        <div class="card-header p-0 pt-1 border-bottom-0">
+            <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="BasicInfo" data-toggle="pill" href="#divBasicInfo" role="tab"
+                        aria-controls="BasicInfo" aria-selected="true">Main</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="OtherInfo" data-toggle="pill" href="#divOtherInfo" role="tab"
+                        aria-controls="OtherInfo" aria-selected="true">Other</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body">
+            <div class="tab-content" id="tabContent">
+                <div class="tab-pane fade show active" id="divBasicInfo" role="tabpanel" aria-labelledby="divBasicInfo">
+                    <div class="row">
+                        <label asp-for="Title" class="col-sm-1 col-form-label"></label>
+                        <textarea asp-for="Title" class="col-sm-11 form-control" type="text"></textarea>
+                    </div>
+                    <hr />
+                    <partial name="_AddExpenseDetails" />
+
+                  <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <table class="" border="1" style=" width:100%;margin:1px auto;">
+                                <tr>
+                                    <th style="background-color:aqua">Paid Amount</th>
+                                    <td style="width:50%">
+                                        <input asp-for="PaidAmount" id="PaidAmount" class="unstyled-button" readonly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Grand Total</th>
+                                    <td style="width:50%">
+                                        <input asp-for="GrandTotal" id="GrandTotal" class="unstyled-button" readonly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Due Amount</th>
+                                    <td style="width:50%">
+                                        <input asp-for="DueAmount" id="DueAmount" class="unstyled-button" readonly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Change Amount</th>
+                                    <td style="width:50%">
+                                        <input asp-for="ChangeAmount" id="ChangeAmount" class="unstyled-button"
+                                            readonly />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-8">
+                            <h2>Add Payment</h2>
+                            <partial name="_AddPaymentModeHistory" />
+                            <hr />
+                            <div class="row">
+                                <label></label>
+                                <div class="col-sm-12">
+                                    <input type="button" id="btnSave" value="Save" onclick="SaveExpenseSummary()"
+                                        class="btn btn-success">
+                                    <button type="button" id="btnClose" class="btn btn-danger" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="divOtherInfo" role="tabpanel" aria-labelledby="divOtherInfoTab">
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label">Branch</label>
+                        <div class="col-sm-6">
+                            <select asp-for="BranchId" id="BranchId" style="width: 100%;"
+                                asp-items="@ViewBag.ddlBranch" class="form-control" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CurrencyCode" class="col-sm-1 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <select asp-for="CurrencyCode" id="CurrencyCode" style="width: 100%;"
+                                asp-items="@ViewBag.ddlCurrency" class="form-control" required>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/js/ExpenseSummary/ExpenseDetails_CRUD.js"></script>
+
+
+<script>
+    $('#CurrentURL').val(window.location.pathname);
+    $(document).ready(function () {
+        $("#ExpenseTypeId").select2();
+        $("#CurrencyId").select2();
+
+        //Edit Option:
+        if (parseFloat($("#Action").val()) != 1) {
+            var result = @Html.Raw(Json.Serialize(Model.listExpenseDetails));
+            if (result != null) {
+                result.forEach(LoadTableRowFromDB);
+            }
+        }
+    });
+</script>
+
+<style>
+    table th {
+        padding-left: 5px;
+    }
+
+    table td {
+        padding-left: 5px;
+    }
+
+    .card-body {
+        padding-top: 0.25rem;
+        padding-right: 1.25rem;
+        padding-bottom: 1.25rem;
+        padding-left: 1.25rem;
+    }
+</style>

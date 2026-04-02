@@ -1,0 +1,56 @@
+<div class="wrapper">
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-5">
+                    <button class="btn btn-success" onclick="TransferItem()">Transfer Item</button>
+                </div>
+                <div class="col-md-7 pull-right">
+                    <h5 class="pull-right"><b>&nbsp;Item Transfer Log List</b></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body scroll panel-height">
+            <table id="tblItemTransferLog" class="BlueGreen" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Item</th>
+                        <th>Current Total Stock</th>
+                        <th>Total Transfer Item</th>
+                        <th>From Warehouse</th>
+                        <th>To Warehouse </th>
+                        <th>Reason Of Transfer</th>
+                        <th>Created Date </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 5px;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+</style>
+
+<script src="~/js/ItemTransferLog/ItemTransferLog_Datatable.js"></script>
+<script src="~/js/ItemTransferLog/TransferSingleItem_CRUD.js"></script>
+
+<script>
+    var Details = function (id) {
+        var url = "/ItemTransferLog/Details?id=" + id;
+        OpenModalView(url, "modal-lg", 'Item Transfer Log Details');
+    };
+</script>

@@ -1,0 +1,61 @@
+@model BusinessERP.Models.AccTransferViewModel.AccTransferCRUDViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="frmAccTransfer">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+
+                <div class="form-group">
+                    <label asp-for="SenderId" class="control-label"></label>
+                    <select asp-for="SenderId" id="SenderId" style="width: 100%;" asp-items="@ViewBag.ddlAccAccount"
+                        class="form-control" required>
+                        <option disabled selected>--- SELECT ---</option>
+                    </select>
+                    <span asp-validation-for="SenderId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReceiverId" class="control-label"></label>
+                    <select asp-for="ReceiverId" id="ReceiverId" style="width: 100%;" asp-items="@ViewBag.ddlAccAccount"
+                        class="form-control" required>
+                        <option disabled selected>--- SELECT ---</option>
+                    </select>
+                    <span asp-validation-for="ReceiverId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TransferDate" class="control-label"></label>
+                    <input asp-for="TransferDate" class="form-control" type="date" />
+                    <span asp-validation-for="TransferDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <input asp-for="Amount" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Note" class="control-label"></label>
+                    <textarea asp-for="Note" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btnSave" value="Save" onclick="Save()" class="btn btn-info">
+                    <button type="button" id="btnClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#SenderId").select2();
+        $("#ReceiverId").select2();
+    });
+</script>

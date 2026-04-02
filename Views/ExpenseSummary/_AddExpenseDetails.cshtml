@@ -1,0 +1,62 @@
+﻿<div id="divAddPaymentDetail" class="row">
+    <table id="tblExpenseDetails" class="BlueGreen" border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Expense Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td style="width:30px;">
+                    <input id="ExpenseDetailsId" type="number" class="unstyled-button" style="width: 30px;" readonly />
+                </td>
+                <td style="width:200px;">
+                    <select id="ExpenseTypeId" asp-items="@ViewBag.LoadddlExpenseType" onchange="onchangeExpenseType()"
+                        style="width: 100%;">
+                    </select>
+                </td>
+                <td style="width:400px;">
+                    <textarea id="Description" style="width:400px;"></textarea>
+                </td>
+                <td style="width:70px;">
+                    <input id="Quantity" type="number" onchange="onchangeQuantity()" style="width:70px;" class=""
+                        value="1" min="1" />
+                </td>
+                <td style="width:70px;">
+                    <input id="UnitPrice" type="number" onchange="onchangeQuantity()" style="width:70px;" class=""
+                        value="1" min="1" />
+                </td>
+                <td style="width:70px;">
+                    <input id="TotalPrice" type="text" style="width:70px;" class="unstyled-button" value="1" readonly />
+                </td>
+                <td style="width:120px;">
+                    <input type="button" id="btnExpenseDetails" onclick="AddExpenseDetails();" value="Add Item"
+                        class="btn btn-info btn-xs" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="~/js/ExpenseSummary/ExpenseDetails_HtmlTblOpr.js"></script>
+<script>
+    var ObjExpenseDetails = function () {
+        var ExpenseDetailsCRUDViewModel = {
+            ExpenseSummaryId: $("#ExpenseSummaryId").text(),
+            ExpenseTypeId: $("#ExpenseTypeId").val(),
+            ExpenseType: $("#ExpenseTypeId option:selected").text(),
+            Description: $("textarea#Description").val(),
+            Quantity: $("#Quantity").val(),
+            UnitPrice: $("#UnitPrice").val(),
+            TotalPrice: $("#TotalPrice").val(),
+        };
+        return ExpenseDetailsCRUDViewModel;
+    }
+</script>

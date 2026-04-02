@@ -1,0 +1,56 @@
+@model BusinessERP.Models.WarehouseNotificationViewModel.WarehouseNotificationCRUDViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="BlueGreen">
+            <tr>
+                <th>Id</th>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <th>From Warehouse</th>
+                <td>@Model.FromWarehouseDisplay</td>
+            </tr>
+            <tr>
+                <th>To Warehouse</th>
+                <td>@Model.ToWarehouseDisplay</td>
+            </tr>
+            <tr>
+                <th>Item Id</th>
+                <td>@Model.ItemId</td>
+            </tr>
+            <tr>
+                <th>Receive Quantity</th>
+                <td>@Model.ReceiveQuantity</td>
+            </tr>
+            <tr>
+                <th>Send Quantity</th>
+                <td>@Model.SendQuantity</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>@Model.Message</td>
+            </tr>
+            <tr>
+                <th>Is Read</th>
+                <td>@Model.IsRead</td>
+            </tr>
+            <tr>
+                <th>Created Date</th>
+                <td>@Model.CreatedDate</td>
+            </tr>
+            <tr>
+                <th>Modified Date</th>
+                <td>@Model.ModifiedDate</td>
+            </tr>
+            <tr>
+                <th>Created By</th>
+                <td>@Model.CreatedBy</td>
+            </tr>
+            <tr>
+                <th>Modified By</th>
+                <td>@Model.ModifiedBy</td>
+            </tr>
+        </table>
+    </div>
+</div>

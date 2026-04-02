@@ -1,0 +1,459 @@
+@model BusinessERP.Models.DamageItemDeatilsViewModel.DamageItemReportViewModel
+
+@{
+    ViewData["Title"] = "Damage Item Reports";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4><i class="fa fa-chart-bar"></i> Generate Reports</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="GenerateReport" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label asp-for="FromDate" class="control-label"></label>
+                                    <input asp-for="FromDate" class="form-control" type="date" />
+                                    <span asp-validation-for="FromDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label asp-for="ToDate" class="control-label"></label>
+                                    <input asp-for="ToDate" class="form-control" type="date" />
+                                    <span asp-validation-for="ToDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label asp-for="SupplierId" class="control-label">Supplier</label>
+                                    <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers">
+                                        <option value="">All Suppliers</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label asp-for="ItemId" class="control-label">Product</label>
+                                    <select asp-for="ItemId" class="form-control" asp-items="ViewBag.Items">
+                                        <option value="">All Products</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ReportType" class="control-label"></label>
+                                    <select asp-for="ReportType" class="form-control" id="reportType">
+                                        <option value="Detail">Detail Report</option>
+                                        <option value="Summary">Summary Report</option>
+                                        <option value="BySupplier">By Supplier</option>
+                                        <option value="ByProduct">By Product</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-file-alt"></i> Generate Report
+                            </button>
+                            @if (Model.ReportData != null && Model.ReportData.Any())
+                            {
+                                <button type="button" class="btn btn-secondary" onclick="printReport()">
+                                    <i class="fa fa-print"></i> Print Report
+                                </button>
+                                <button type="button" class="btn btn-success" onclick="exportToExcel()">
+                                    <i class="fa fa-file-excel"></i> Export to Excel
+                                </button>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.ReportData != null && Model.ReportData.Any())
+    {
+        <!-- Summary Cards -->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="fa fa-chart-pie"></i> Report Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="info-box bg-danger">
+                                    <span class="info-box-icon"><i class="fa fa-exclamation-triangle"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Total Damaged</span>
+                                        <span class="info-box-number">@Model.Summary.TotalItemsDamaged</span>
+                                        <small>@Model.Summary.TotalDamageRecords records</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="info-box bg-success">
+                                    <span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Total Adjusted</span>
+                                        <span class="info-box-number">@Model.Summary.TotalItemsAdjusted</span>
+                                        <small>@Model.Summary.FullyAdjustedCount fully adjusted</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="info-box bg-warning">
+                                    <span class="info-box-icon"><i class="fa fa-clock"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Remaining</span>
+                                        <span class="info-box-number">@Model.Summary.TotalItemsRemaining</span>
+                                        <small>@Model.Summary.PartiallyAdjustedCount partially adjusted</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="info-box bg-primary">
+                                    <span class="info-box-icon"><i class="fa fa-percentage"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Adjustment Progress</span>
+                                        <span class="info-box-number">@Model.Summary.TotalAdjustmentPercentage%</span>
+                                        <small>@Model.Summary.NotAdjustedCount not adjusted</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h6>Overall Adjustment Progress</h6>
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar bg-success" role="progressbar" 
+                                         style="width: @Model.Summary.TotalAdjustmentPercentage%" 
+                                         aria-valuenow="@Model.Summary.TotalAdjustmentPercentage" 
+                                         aria-valuemin="0" aria-valuemax="100">
+                                        @Model.Summary.TotalAdjustmentPercentage%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Report Table -->
+        @if (Model.ReportType == "Detail" || string.IsNullOrEmpty(Model.ReportType))
+        {
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-list"></i> Detailed Report</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="reportTable">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Date</th>
+                                            <th>Item</th>
+                                            <th>Code</th>
+                                            <th>Supplier</th>
+                                            <th>Damaged</th>
+                                            <th>Adjusted</th>
+                                            <th>Remaining</th>
+                                            <th>%</th>
+                                            <th>Status</th>
+                                            <th>Reason</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ReportData)
+                                        {
+                                            <tr>
+                                                <td>@item.DamageItemId</td>
+                                                <td>@item.DamageDate.ToString("MM/dd/yyyy")</td>
+                                                <td>@item.ItemName</td>
+                                                <td>@item.ItemCode</td>
+                                                <td>@item.SupplierName</td>
+                                                <td><span class="badge badge-danger">@item.TotalDamaged</span></td>
+                                                <td><span class="badge badge-info">@item.TotalAdjusted</span></td>
+                                                <td><span class="badge badge-warning">@item.Remaining</span></td>
+                                                <td>@item.AdjustmentPercentage%</td>
+                                                <td>
+                                                    @if (item.Status == "Fully Adjusted")
+                                                    {
+                                                        <span class="badge badge-success"><i class="fa fa-check"></i> @item.Status</span>
+                                                    }
+                                                    else if (item.Status == "Partially Adjusted")
+                                                    {
+                                                        <span class="badge badge-warning"><i class="fa fa-clock"></i> @item.Status</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-secondary"><i class="fa fa-minus"></i> @item.Status</span>
+                                                    }
+                                                </td>
+                                                <td>@item.ReasonOfDamage</td>
+                                                <td>
+                                                    <a asp-action="DetailReport" asp-route-id="@item.DamageItemId" 
+                                                       class="btn btn-sm btn-info" title="View Details">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- By Supplier Report -->
+        @if (Model.ReportType == "BySupplier")
+        {
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-truck"></i> Report by Supplier</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Supplier</th>
+                                            <th>Total Damaged</th>
+                                            <th>Total Adjusted</th>
+                                            <th>Remaining</th>
+                                            <th>Adjustment %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var supplier in Model.Summary.SupplierSummaries)
+                                        {
+                                            var percentage = supplier.TotalDamaged > 0
+                                                ? Math.Round((decimal)supplier.TotalAdjusted / supplier.TotalDamaged * 100, 1)
+                                                : 0;
+                                            <tr>
+                                                <td><strong>@supplier.SupplierName</strong></td>
+                                                <td><span class="badge badge-danger">@supplier.TotalDamaged</span></td>
+                                                <td><span class="badge badge-info">@supplier.TotalAdjusted</span></td>
+                                                <td><span class="badge badge-warning">@supplier.Remaining</span></td>
+                                                <td>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-success" role="progressbar" 
+                                                             style="width: @percentage%" 
+                                                             aria-valuenow="@percentage" 
+                                                             aria-valuemin="0" aria-valuemax="100">
+                                                            @percentage%
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- By Product Report -->
+        @if (Model.ReportType == "ByProduct")
+        {
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-box"></i> Report by Product</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Total Damaged</th>
+                                            <th>Total Adjusted</th>
+                                            <th>Remaining</th>
+                                            <th>Adjustment %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model.Summary.ProductSummaries)
+                                        {
+                                            var percentage = product.TotalDamaged > 0
+                                                ? Math.Round((decimal)product.TotalAdjusted / product.TotalDamaged * 100, 1)
+                                                : 0;
+                                            <tr>
+                                                <td><strong>@product.ItemName</strong></td>
+                                                <td><span class="badge badge-danger">@product.TotalDamaged</span></td>
+                                                <td><span class="badge badge-info">@product.TotalAdjusted</span></td>
+                                                <td><span class="badge badge-warning">@product.Remaining</span></td>
+                                                <td>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-success" role="progressbar" 
+                                                             style="width: @percentage%" 
+                                                             aria-valuenow="@percentage" 
+                                                             aria-valuemin="0" aria-valuemax="100">
+                                                            @percentage%
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        $(document).ready(function() {
+            $('#reportTable').DataTable({
+                "pageLength": 25,
+                "order": [[0, "desc"]],
+                "dom": 'Bfrtip',
+                "buttons": ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+        });
+
+        function printReport() {
+            window.print();
+        }
+
+        function exportToExcel() {
+            var form = $('<form>', {
+                'method': 'POST',
+                'action': '@Url.Action("ExportToExcel", "DamageItemReport")'
+            });
+
+            form.append($('<input>', {
+                'type': 'hidden',
+                'name': 'FromDate',
+                'value': $('#FromDate').val()
+            }));
+
+            form.append($('<input>', {
+                'type': 'hidden',
+                'name': 'ToDate',
+                'value': $('#ToDate').val()
+            }));
+
+            form.append($('<input>', {
+                'type': 'hidden',
+                'name': 'SupplierId',
+                'value': $('#SupplierId').val()
+            }));
+
+            form.append($('<input>', {
+                'type': 'hidden',
+                'name': 'ItemId',
+                'value': $('#ItemId').val()
+            }));
+
+            form.append($('<input>', {
+                'type': 'hidden',
+                'name': 'ReportType',
+                'value': $('#reportType').val()
+            }));
+
+            $('body').append(form);
+            form.submit();
+            form.remove();
+        }
+    </script>
+}
+
+<style>
+    .info-box {
+        display: flex;
+        padding: 15px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .info-box-icon {
+        font-size: 45px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 90px;
+    }
+
+    .info-box-content {
+        flex: 1;
+        padding: 10px;
+    }
+
+    .info-box-text {
+        display: block;
+        font-size: 14px;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    .info-box-number {
+        display: block;
+        font-size: 32px;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .info-box-content small {
+        font-size: 12px;
+        opacity: 0.8;
+    }
+
+    @@media print {
+        .card-header, .btn, .no-print, form {
+            display: none !important;
+        }
+
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        body {
+            font-size: 12px;
+        }
+    }
+</style>

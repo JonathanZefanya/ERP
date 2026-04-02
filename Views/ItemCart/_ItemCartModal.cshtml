@@ -1,0 +1,62 @@
+﻿<div class="modal fade" id="ItemCartModal" tabindex="-1" role="dialog" aria-labelledby="ItemCartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="ItemCartModalLabel">
+                    <i class="fas fa-shopping-cart"></i> Item Cart Details
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tblItemCart" class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th><i class="fas fa-hashtag"></i> Id</th>
+                                <th><i class="fas fa-box"></i> Item</th>
+                                <th style="width: auto;"><i class="fas fa-sort-numeric-up"></i> Quantity</th>
+                                <th><i class="fas fa-dollar-sign"></i> Unit Price</th>
+                                <th><i class="fas fa-percentage"></i> VAT (%)</th>
+                                <th><i class="fas fa-calculator"></i> Total</th>
+                                <th><i class="fas fa-cogs"></i> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic rows will be appended here -->
+                        </tbody>
+                        <tfoot>
+                            <!-- Optional footer rows -->
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-md-6 text-left">
+                        <h6><strong id="ItemChartSubTotal"><i class="fas fa-receipt"></i> Sub Total: </strong></h6>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <h6><strong id="ItemChartGrandTotal"><i class="fas fa-coins"></i> Grand Total: </strong></h6>
+                    </div>
+                </div>
+                <div class="row w-100 mt-3">
+                    <div class="col-md-6 text-left">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="ClearAllCartItem()">
+                            <i class="fas fa-trash-alt"></i> Clear Cart
+                        </button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" class="btn btn-success btn-sm" id="btnCheckout" onclick="ItemCheckout()">
+                            <i class="fas fa-shopping-cart"></i> Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

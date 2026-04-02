@@ -1,0 +1,68 @@
+<div class="wrapper">
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5 class="pull-right"><b>&nbsp;Warehouse Notification List</b></h5>
+                </div>
+                <div class="col-md-7" style="margin-top: 12px;">
+                    <button class="notification btn-sm">
+                        <span class="fa fa-bell fa-2x"></span>
+                        <label id="lblNotificationCount" class="badge">0</label>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body scroll panel-height">
+            <table id="tblWarehouseNotification" class="BlueGreen" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>From Warehouse</th>
+                        <th>To Warehouse</th>
+                        <th>Item Id</th>
+                        <th>Send Quantity</th>
+                        <th>Receive Quantity</th>
+                        <th>Message</th>
+                        <th>Created Date</th>
+                        <th>
+                            <input type="checkbox" id="MarkedAllasRead" />
+                            <label for="MarkedAllasRead">Marked All as Read</label>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 5px;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+</style>
+
+<script src="~/js/WarehouseNotification/WarehouseNotification_CRUD.js"></script>
+<script src="~/js/WarehouseNotification/WarehouseNotification_Datatable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        GetUnreadTotalNotification();
+    });
+
+    $("body").on("click", "#MarkedAllasRead", function () {
+        if ($('#MarkedAllasRead').is(":checked")) {
+            MarkedAllAsRead();
+        }
+    });
+</script>

@@ -1,0 +1,134 @@
+@model BusinessERP.Models.ExpenseSummaryViewModel.ExpenseSummaryCRUDViewModel
+
+<div class="card card-primary card-outline card-tabs">
+    <div class="card-header p-0 pt-1 border-bottom-0">
+        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="Tab1" data-toggle="pill" href="#divTab1" role="tab" aria-controls="Tab1"
+                    aria-selected="true">Expense Summary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="Tab2" data-toggle="pill" href="#divTab2" role="tab" aria-controls="Tab2"
+                    aria-selected="true">Expense Details</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content" id="tabContent">
+            <div class="tab-pane fade show active" id="divTab1" role="tabpanel" aria-labelledby="divTab1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="CustomBlueTable">
+                            <tr>
+                                <th>Id</th>
+                                <td>@Model.Id</td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <td>@Model.Title</td>
+                            </tr>
+                            <tr>
+                                <th>Grand Total</th>
+                                <td>@Model.GrandTotal</td>
+                            </tr>
+                            <tr>
+                                <th>Paid Amount</th>
+                                <td>@Model.PaidAmount</td>
+                            </tr>
+                            <tr>
+                                <th>Due Amount</th>
+                                <td>@Model.DueAmount</td>
+                            </tr>
+                            <tr>
+                                <th>Currency</th>
+                                <td>@Model.CurrencyCode</td>
+                            </tr>
+                            <tr>
+                                <th>Branch</th>
+                                <td>@Model.BranchName</td>
+                            </tr>
+
+                            <tr>
+                                <th>Created Date</th>
+                                <td>@Model.CreatedDate</td>
+                            </tr>
+                            <tr>
+                                <th>Modified Date</th>
+                                <td>@Model.ModifiedDate</td>
+                            </tr>
+                            <tr>
+                                <th>Created By</th>
+                                <td>@Model.CreatedBy</td>
+                            </tr>
+                            <tr>
+                                <th>Modified By</th>
+                                <td>@Model.ModifiedBy</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade show" id="divTab2" role="tabpanel" aria-labelledby="divTab2">
+                <div class="row" style="width:100%; margin:0 auto;">
+                    <table class="CustomBlueTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Expense Type</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>                               
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.listExpenseDetails)
+                        {
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ExpenseType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                                    </td>                                    
+                                </tr>
+                            </tbody>
+                        }
+                        <tfoot id="tblAddLabTeststfoot">
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+
+                                <td>
+                                    <span>Total: @Model.GrandTotal</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+@model BusinessERP.Models.IncomeSummaryViewModel.IncomeSummaryCRUDViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="frmIncomeSummary">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeId" class="control-label"></label>
+                    <select asp-for="TypeId" id="TypeId" style="width: 100%;" class="form-control" required>
+                    </select>
+                    <span asp-validation-for="TypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label"></label>
+                    <select asp-for="CategoryId" id="CategoryId" style="width: 100%;" class="form-control" required>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IncomeDate" class="control-label"></label>
+                    <input asp-for="IncomeDate" class="form-control" />
+                    <span asp-validation-for="IncomeDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea class="form-control" asp-for="Description" rows="5" spellcheck="false"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="button" id="btnSave" value="Save" onclick="Save()" class="btn btn-info">
+                    <button type="button" id="btnClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var _url1 = "/IncomeType/GetAllType";
+        GetDropDownDataBase("TypeId", _url1);
+        $("#TypeId").select2();
+
+        var _url2 = "/IncomeCategory/GetAllCategory";
+        GetDropDownDataBase("CategoryId", _url2);
+        $("#CategoryId").select2();
+    });
+</script>

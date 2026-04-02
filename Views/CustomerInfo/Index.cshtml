@@ -1,0 +1,42 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<div class="wrapper">
+    <!-- DataTable -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card datatable-card">
+                <div class="card-header" style="position: relative;">
+                    <h5 class="mb-0"><i class="fas fa-table"></i> @localizer["Customer Info List"]</h5>
+                    <a class="fa fa-plus-square fa-2x text-white" onclick="AddEdit(0)"
+                        style="cursor: pointer; position: absolute; right: 15px; top: 50%; transform: translateY(-50%);"
+                        title="Add New" role="button"></a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tblCustomerInfo" class="table table-striped table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>@localizer["Id"]</th>
+                                    <th>@localizer["Name"]</th>
+                                    <th>@localizer["Company Name"]</th>
+                                    <th>@localizer["Type"]</th>
+                                    <th>@localizer["Phone"]</th>
+                                    <th>@localizer["Email"]</th>
+                                    <th>@localizer["Billing Address"]</th>
+                                    <th>@localizer["Created Date"]</th>
+                                    <th class="no-sort"></th>
+                                    <th class="no-sort"></th>
+                                    <th class="no-sort"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/CustomerInfo/CustomerInfo_CRUD.js"></script>
+<script src="~/js/CustomerInfo/CustomerInfo_Datatable.js"></script>

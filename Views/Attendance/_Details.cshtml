@@ -1,0 +1,44 @@
+@model BusinessERP.Models.AttendanceViewModel.AttendanceCRUDViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="ItemTranTable">
+            <tr>
+                <th>Id</th>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <th>Employee</th>
+                <td>@Model.EmployeeName</td>
+            </tr>
+            <tr>
+                <th>Check In</th>
+                <td>@Model.CheckIn</td>
+            </tr>
+            <tr>
+                <th>Check Out</th>
+                <td>@Model.CheckOut</td>
+            </tr>
+            <tr>
+                <th>Stay Time</th>
+                <td>@Model.StayTime</td>
+            </tr>
+            <tr>
+                <th>Created Date</th>
+                <td>@Model.CreatedDate</td>
+            </tr>
+            <tr>
+                <th>Modified Date</th>
+                <td>@Model.ModifiedDate</td>
+            </tr>
+            <tr>
+                <th>Created By</th>
+                <td>@Model.CreatedBy</td>
+            </tr>
+            <tr>
+                <th>Modified By</th>
+                <td>@Model.ModifiedBy</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+:root {
+    /* Configurable variables */
+    --ui-scale: 1; /* Default UI scale */
+    --ui-width: 98mm; /* Default UI width */
+}
+
+/* General styles for the receipt */
+.body_thum {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 0 auto;
+    padding: 0;
+    width: var(--ui-width); /* Use configurable UI width */
+    box-sizing: border-box;
+    transform: scale(var(--ui-scale)); /* Use configurable UI scale */
+    transform-origin: top left; /* Set the scaling origin */
+}
+
+.receipt {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 5mm;
+}
+
+    .header img {
+        width: 60px; /* Adjusted for a smaller logo */
+        height: auto;
+        margin-bottom: 3mm;
+    }
+
+    .header h2 {
+        margin: 0;
+        font-size: 14px; /* Adjusted font size for better fit */
+    }
+
+    .header p {
+        margin: 0;
+        font-size: 10px;
+    }
+
+.details, .items, .totals {
+    margin-bottom: 3mm;
+}
+
+    .details p, .totals p {
+        margin: 0;
+        line-height: 1.4;
+        font-size: 11px;
+    }
+
+    .items table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+    }
+
+    .items th, .items td {
+        text-align: left;
+        padding: 2mm 0;
+    }
+
+    .items th {
+        border-bottom: 1px solid #000;
+        font-weight: bold;
+    }
+
+    .items td {
+        border-bottom: 1px dashed #ccc;
+    }
+
+.totals {
+    text-align: right;
+}
+
+    .totals p {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+.barcode, #divQRCode {
+    text-align: center;
+    margin-top: 5mm;
+}
+
+    #divQRCode img {
+        width: 50%; /* Adjust QR Code size */
+        height: auto;
+    }
+
+.print-button {
+    text-align: center;
+    margin-top: 10mm;
+}
+
+    .print-button button {
+        padding: 8px 16px;
+        font-size: 12px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+        .print-button button:hover {
+            background-color: #0056b3;
+        }

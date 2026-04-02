@@ -1,0 +1,188 @@
+@model BusinessERP.Models.DamageItemDeatilsViewModel.DamageItemReportDetailViewModel
+
+@{
+    ViewData["Title"] = "Damage Item Detail Report";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4><i class="fa fa-file-alt"></i> Damage Item Detail Report - #@Model.DamageItemId</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th width="40%">Damage ID:</th>
+                                    <td>@Model.DamageItemId</td>
+                                </tr>
+                                <tr>
+                                    <th>Date:</th>
+                                    <td>@Model.DamageDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <th>Item Name:</th>
+                                    <td>@Model.ItemName</td>
+                                </tr>
+                                <tr>
+                                    <th>Item Code:</th>
+                                    <td>@Model.ItemCode</td>
+                                </tr>
+                                <tr>
+                                    <th>Supplier:</th>
+                                    <td>@Model.SupplierName</td>
+                                </tr>
+                                <tr>
+                                    <th>Created By:</th>
+                                    <td>@Model.CreatedBy</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th width="40%">Total Damaged:</th>
+                                    <td><span class="badge badge-danger" style="font-size: 16px;">@Model.TotalDamaged</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Adjusted:</th>
+                                    <td><span class="badge badge-info" style="font-size: 16px;">@Model.TotalAdjusted</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Remaining:</th>
+                                    <td><span class="badge badge-warning" style="font-size: 16px;">@Model.Remaining</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Adjustment %:</th>
+                                    <td><span class="badge badge-primary" style="font-size: 16px;">@Model.AdjustmentPercentage%</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>
+                                        @if (Model.Status == "Fully Adjusted")
+                                        {
+                                            <span class="badge badge-success" style="font-size: 14px;"><i class="fa fa-check"></i> @Model.Status</span>
+                                        }
+                                        else if (Model.Status == "Partially Adjusted")
+                                        {
+                                            <span class="badge badge-warning" style="font-size: 14px;"><i class="fa fa-clock"></i> @Model.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary" style="font-size: 14px;"><i class="fa fa-minus"></i> @Model.Status</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <h6>Reason for Damage:</h6>
+                            <p class="alert alert-info">@Model.ReasonOfDamage</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <h6>Adjustment Progress:</h6>
+                            <div class="progress" style="height: 30px;">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: @Model.AdjustmentPercentage%" 
+                                     aria-valuenow="@Model.AdjustmentPercentage" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                    @Model.AdjustmentPercentage%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Adjustments != null && Model.Adjustments.Any())
+    {
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5><i class="fa fa-history"></i> Adjustment History (@Model.Adjustments.Count)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Adjustment ID</th>
+                                        <th>Date</th>
+                                        <th>Quantity</th>
+                                        <th>Reason</th>
+                                        <th>Created By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var adj in Model.Adjustments)
+                                    {
+                                        <tr>
+                                            <td>@adj.AdjustmentId</td>
+                                            <td>@adj.AdjustmentDate.ToString("MM/dd/yyyy")</td>
+                                            <td><span class="badge badge-success">@adj.Quantity</span></td>
+                                            <td>@adj.Reason</td>
+                                            <td>@adj.CreatedBy</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-info">
+                                        <th colspan="2">Total Adjusted:</th>
+                                        <th><span class="badge badge-info">@Model.TotalAdjusted</span></th>
+                                        <th colspan="2"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <i class="fa fa-info-circle"></i> No adjustments have been made for this damage item yet.
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Back to Reports
+            </a>
+            <button onclick="window.print()" class="btn btn-primary">
+                <i class="fa fa-print"></i> Print Report
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    @@media print {
+        .btn, .no-print {
+            display: none !important;
+        }
+
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
+</style>

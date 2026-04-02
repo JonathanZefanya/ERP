@@ -1,0 +1,71 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-footer text-right">
+                <button class="btn btn-info" onclick="printDivSSS('divPrintStockItemReport','BlueGreen')"><span
+                        class="fa fa-print"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="divPrintStockItemReport">
+        <h4>Stock Item Report</h4>
+        <hr />
+
+        <table id="tblStockItem" class="BlueGreen Table5xMargin" border="1" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Sub Quantity</th>
+                    <th>Warehouse</th>
+
+                    <th style="background-color: gray;">SL</th>
+                    <th style="background-color: gray;">Size</th>
+                    <th style="background-color: gray;">Quantity</th>
+                    <th style="background-color: gray;">Sub Quantity</th>
+                    <th style="background-color: gray;">Warehouse</th>
+
+                    <th>SL</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Sub Quantity</th>
+                    <th>Warehouse</th>
+                </tr>
+            <tbody></tbody>
+            </thead>
+        </table>
+
+        <hr />
+        <b>
+            <span id="TotalQuantity">Σ Total Quantity: 0</span> <br />
+            <span id="TotalSubQuantity">Σ Total Sub Quantity: 0</span>
+        </b>
+        <h4 id="NoDataMessage"></h4>
+        <style>
+            h4 {
+                text-align: center;
+            }
+        </style>
+    </div>
+</div>
+
+<script src="~/js/StockItemReport/StockItem.js"></script>
+
+<script>
+    setTimeout(function () {
+        GetStockItemReportData();
+    }, 300);
+
+
+    var printDivSSS = function (divName, RemoveCssClass) {
+        $("table").removeClass(RemoveCssClass);
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        window.location.reload();
+    }
+</script>

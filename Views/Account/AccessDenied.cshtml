@@ -1,0 +1,17 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+<hr />
+<div class="row" style="margin: 10px;">
+    <div class="text-center">
+        <h3 style="color: red;">You do not have access to this resource.</h3>
+    </div>
+    <div class="col-sm-12 text-center">
+        <p>
+            @localizer["Don't have an account?"] <a asp-action="Register"
+                class="text-primary m-l-5"><b>@localizer["Sign Up"]</b></a>
+        </p>
+    </div>
+</div>

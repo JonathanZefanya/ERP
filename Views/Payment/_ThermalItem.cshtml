@@ -1,0 +1,35 @@
+﻿@model BusinessERP.Models.PaymentViewModel.PaymentReportViewModel
+
+<table>
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Qty.</th>
+            <th>Disc.</th>
+            <th>T.Price</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.listPaymentDetailCRUDViewModel)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemDiscountAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>

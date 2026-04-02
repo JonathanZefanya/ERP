@@ -1,0 +1,216 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="~/css/erp-dashboard.css">
+
+<div class="erp-menu-container">
+    
+    <!-- Sales & Customer Section -->
+    <div class="erp-section">
+        <h3 class="section-title">
+            <i class="bi bi-cart-check"></i>
+            Sales & Customers
+        </h3>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("Index", "Payment")" class="erp-menu-card card-pink">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-bag-plus"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["New Sale"]</h4>
+                        <p class="card-description">Create new sale transaction</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("PaymentSummaryReport", "SalesReport")" class="erp-menu-card card-blue">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Sales Report"]</h4>
+                        <p class="card-description">View sales analytics</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("Index", "CustomerInfo")" class="erp-menu-card card-yellow">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Customer List"]</h4>
+                        <p class="card-description">Manage customers</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("Index", "Categories")" class="erp-menu-card card-purple">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-list-ul"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Category List"]</h4>
+                        <p class="card-description">Product categories</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Management Section -->
+    <div class="erp-section">
+        <h3 class="section-title">
+            <i class="bi bi-boxes"></i>
+            Inventory Management
+        </h3>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("Index", "Items")" class="erp-menu-card card-green">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Manage Stock"]</h4>
+                        <p class="card-description">Stock management</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("LowInStockItem", "Items")" class="erp-menu-card card-orange">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Low Stock"]</h4>
+                        <p class="card-description">Low inventory alerts</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("Index", "Supplier")" class="erp-menu-card card-teal">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Supplier List"]</h4>
+                        <p class="card-description">Manage suppliers</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("Index", "CompanyInfo")" class="erp-menu-card card-indigo">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Config"]</h4>
+                        <p class="card-description">System settings</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports & Analytics Section -->
+    <div class="erp-section">
+        <h3 class="section-title">
+            <i class="bi bi-bar-chart-line"></i>
+            Reports & Analytics
+        </h3>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("PaymentSummaryReport", "SalesReport")" class="erp-menu-card card-cyan">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Sales Report"]</h4>
+                        <p class="card-description">Detailed sales data</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("PurchasesSummary", "PurchasesReport")" class="erp-menu-card card-lime">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Purchases Report"]</h4>
+                        <p class="card-description">Purchase analytics</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("SummaryReport", "SalesReport")" class="erp-menu-card card-violet">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-clipboard-data"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Summary Report"]</h4>
+                        <p class="card-description">Overall summary</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="@Url.Action("AttendanceReport", "SalesReport")" class="erp-menu-card card-red">
+                    <div class="card-icon-wrapper">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">@localizer["Attendance Report"]</h4>
+                        <p class="card-description">Staff attendance</p>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+@model BusinessERP.Models.ItemTransferLogViewModel.ItemTransferLogCRUDViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="BlueGreen">
+            <tr>
+                <th>Id</th>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <th>Item</th>
+                <td>@Model.ItemDisplay</td>
+            </tr>
+            <tr>
+                <th>CurrentTotalStock</th>
+                <td>@Model.CurrentTotalStock</td>
+            </tr>
+            <tr>
+                <th>Total Transfer Item</th>
+                <td>@Model.TotalTransferItem</td>
+            </tr>
+            <tr>
+                <th>From Warehouse</th>
+                <td>@Model.FromWarehouseDisplay</td>
+            </tr>
+            <tr>
+                <th>To Warehouse</th>
+                <td>@Model.ToWarehouseDisplay</td>
+            </tr>
+            <tr>
+                <th>Reason Of Transfer</th>
+                <td>@Model.ReasonOfTransfer</td>
+            </tr>
+            <tr>
+                <th>Created Date</th>
+                <td>@Model.CreatedDate</td>
+            </tr>
+            <tr>
+                <th>Modified Date</th>
+                <td>@Model.ModifiedDate</td>
+            </tr>
+            <tr>
+                <th>Created By</th>
+                <td>@Model.CreatedBy</td>
+            </tr>
+            <tr>
+                <th>Modified By</th>
+                <td>@Model.ModifiedBy</td>
+            </tr>
+        </table>
+    </div>
+</div>

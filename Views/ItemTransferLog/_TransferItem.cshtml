@@ -1,0 +1,73 @@
+﻿@model BusinessERP.Models.WarehouseViewModel.TransferItemViewModel
+
+@{
+    ViewData["Title"] = "Transfer Item";
+}
+
+<div class="card card-primary card-outline card-tabs">
+    <div class="card-header p-0 pt-1 border-bottom-0">
+        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="Tab1" data-toggle="pill" href="#divTab1" role="tab" aria-controls="Tab1"
+                    aria-selected="true">Single Item Transfer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="Tab2" data-toggle="pill" href="#divTab2" role="tab" aria-controls="Tab2"
+                    aria-selected="true">Multiple Item Transfer</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content" id="tabContent">
+            <div class="tab-pane fade show active" id="divTab1" role="tabpanel" aria-labelledby="divTab1">
+                <form id="frmTransferItem">
+                    <input type="hidden" id="CurrentURL" asp-for="CurrentURL" />
+                    <partial name="_SingleTransferItem" />
+                </form>
+            </div>
+            <div class="tab-pane fade show" id="divTab2" role="tabpanel" aria-labelledby="divTab2">
+                <partial name="_MultipleTransferItem" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#ItemId").select2();
+        $("#ItemIdMultiple").select2();
+        $('#CurrentURL').val(window.location.pathname);
+        //GetByItem();
+    });
+
+
+    var WarehouseValidate = function () {
+        var _FromWarehouseId = $("#FromWarehouseId").val();
+        var _ToWarehouseId = $("#ToWarehouseId").val();
+        if (parseFloat(_FromWarehouseId) == parseFloat(_ToWarehouseId)) {
+            Swal.fire({
+                title: "Warehouse can't be same, please check.",
+                icon: "warning"
+            }).then(function () {
+                setTimeout(function () {
+                    $("#ToWarehouseId").val(0);
+                }, 500);
+            });
+        }
+    }
+
+    var CheckCurrentStock = function () {
+        var _CurrentTotalStock = $("#CurrentTotalStock").val();
+        var _TotalTransferItem = $("#TotalTransferItem").val();
+
+        if (parseFloat(_TotalTransferItem) > parseFloat(_CurrentTotalStock)) {
+            strCurrentStockMessage = "Transfer item can not be greater than the current total stock.";
+            FieldValidationAlert('#TotalTransferItem', strCurrentStockMessage, "warning");
+            $("#TotalTransferItem").val('');
+        }
+    };
+
+</script>

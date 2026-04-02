@@ -1,0 +1,100 @@
+﻿@model BusinessERP.Models.PaymentViewModel.PaymentReportViewModel
+
+<div class="row no-print">
+    <div class="col-sm-6">
+    </div>
+    <div class="col-sm-6">
+        <button class="btn btn-sm btn-primary" onclick="printReceipt()"><span class="fa fa-print"></span></button>
+        <button class="btn btn-sm btn-dark" onclick="BacktoPreviousPage()">Back</button>
+    </div>
+
+    <hr />
+</div>
+
+<div class="row body_thum">
+    <div id="printableArea">
+        <div class="receipt">
+            <div class="header">
+                <img src="@Model.CompanyInfoCRUDViewModel.Logo" alt="Logo">
+                <h2>@Model.CompanyInfoCRUDViewModel.Name</h2>
+                <p>@Model.CompanyInfoCRUDViewModel.Address</p>
+            </div>
+            <div class="details">
+                <p><strong>Invoice No.:</strong> @Model.PaymentCRUDViewModel.InvoiceNo</p>
+                <p><strong>Date:</strong> @Model.PaymentCRUDViewModel.CreatedDate</p>
+                <p><strong>Name:</strong> @Model.PaymentCRUDViewModel.CustomerName</p>
+            </div>
+            <div class="items">
+                <partial name="_ThermalItem" />
+            </div>
+            <div class="totals">
+                <p><strong>GROSS TOTAL:</strong> @Model.PaymentCRUDViewModel.SubTotal</p>
+                <p><strong>DISCOUNT (@Model.PaymentCRUDViewModel.Discount %):</strong>
+                    @Model.PaymentCRUDViewModel.DiscountAmount</p>
+                <p><strong>VAT:</strong> @Model.PaymentCRUDViewModel.VATAmount</p>
+
+                <p><strong>GRAND TOTAL:</strong> @Model.PaymentCRUDViewModel.GrandTotal</p>
+                <p><strong>PAID:</strong> @Model.PaymentCRUDViewModel.PaidAmount</p>
+                <p><strong>CHANGE:</strong> @Model.PaymentCRUDViewModel.ChangedAmount</p>
+
+                <p><strong>DUE:</strong> @Model.PaymentCRUDViewModel.DueAmount</p>
+                <p><strong>PAYMENT METHOD:</strong> @Model.PaymentMode</p>
+            </div>
+
+            <div class="col-sm-12" id="divQRCode" align="center">
+            </div>
+        </div>
+    </div>
+    <div class="print-button">
+        <button id="btnPrintReceipt" onclick="printReceipt()">Print Receipt</button>
+    </div>
+</div>
+
+
+<link href="~/css/Thermal_Dev.css" rel="stylesheet" />
+<script src="~/lib/base64.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GenerateQRCode();
+        setTimeout(function () {
+            $("#btnPrintReceipt").trigger('click');
+        }, 500);
+    });
+
+    function printReceipt() {
+        // Print the content of the 'printableArea' div
+        var printableArea = document.getElementById('printableArea');
+        if (printableArea) {
+            window.print();
+        } else {
+            alert("Printable area not found.");
+        }
+    }
+
+    var GenerateQRCode = function () {
+        //var _CompanyNumber = 'Company Reg: ' + $("#CompanyNumber").html();
+        //var _InvoiceNo = 'INV: ' + $("#InvoiceNo").html();
+
+        var _CompanyName = 'Seller: ' + $("#CompanyName").html();
+        var _VatNumber = 'Vat No: ' + $("#VatNumber").html();
+        var _CreatedDate = 'Date: ' + $("#CreatedDate").html();
+
+        var _GrandTotal = 'Total: ' + $("#GrandTotal").html();
+        var _VATAmount = 'Tax: ' + $("#VATAmount").html();
+
+
+        var margeTextForQRCode = _CompanyName + '\n' + _VatNumber + '\n' + _CreatedDate + '\n' + _GrandTotal + '\n' + _VATAmount;
+        var encodedmargeTextForQRCode = Base64.encode(margeTextForQRCode);
+        //var decodedStr = Base64.decode(encodedStr);
+
+        $('#divQRCode').empty();
+        var qrcode = new QRCode("divQRCode", {
+            text: encodedmargeTextForQRCode,
+            width: 180, //default 128
+            height: 180,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+</script>

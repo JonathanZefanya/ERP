@@ -1,0 +1,72 @@
+﻿@model BusinessERP.Models.DashboardViewModel.ExpenseByViewModel;
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel-footer text-right">
+            <button class="btn btn-info" onclick="printDiv('printableArea','CustomBlueTable')"><span class="fa fa-print"></span></button>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-hash" id="printableArea">
+    <div class="panel-heading"><h4><b>@ViewBag.ReportTitle</b></h4></div>
+    <div class="panel-body scroll panel-height">
+        <table class="CustomBlueTable" border="1" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Date</th>
+                    <th>Total Tran</th>
+                    <th>Total Quantity</th>
+                    <th>Total Expense</th>
+                    <th>Total Paid</th>
+                    <th>Total Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var sumTotalQuantity = 0;
+                    var sumTotalTran = 0;
+                    double sumTotalExpense = 0;
+                    double sumTotalPaid = 0;
+                    double sumTotalDue = 0;
+
+                    foreach (var item in Model.listExpenseByViewModel)
+                    {
+                        sumTotalQuantity = sumTotalQuantity + item.TotalQuantity;
+                        sumTotalTran = sumTotalTran + item.TotalTran;
+                        sumTotalExpense = (double)sumTotalExpense + (double)item.TotalExpense;
+                        sumTotalPaid = (double)sumTotalPaid + (double)item.TotalPaid;
+                        sumTotalDue = (double)sumTotalDue + (double)item.TotalDue;
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.TranDate</td>
+                            <td>@item.TotalTran</td>
+                            <td>@item.TotalQuantity</td>
+                            <td>@item.TotalExpense</td>
+                            <td>@item.TotalPaid</td>
+                            <td>@item.TotalDue</td>                           
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Σ: @sumTotalTran</td>
+                    <td>Σ: @sumTotalQuantity</td>
+                    <td>Σ: @sumTotalExpense</td>
+                    <td>Σ: @Math.Round(sumTotalPaid, 2)</td>
+                    <td>Σ: @Math.Round(sumTotalDue, 2)</td>                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        table th {
+            padding-left: 5px;
+        }
+
+        table td {
+            padding-left: 5px;
+        }
+    </style>
+</div>

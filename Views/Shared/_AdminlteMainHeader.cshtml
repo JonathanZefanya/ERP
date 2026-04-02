@@ -1,0 +1,98 @@
+﻿@model BusinessERP.Models.AccountViewModels.LoginViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                <i class="fas fa-bars"></i>
+            </a>
+        </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <!-- Language Selector -->
+        <li class="nav-item">
+            <div class="form-group language-selector-header">
+                @await Html.PartialAsync("_CulturePartial")
+            </div>
+        </li>
+
+        <!-- Settings Button -->
+        <li class="nav-item">
+            <a href="/SystemSettings/Index" class="btn btn-settings-header" 
+               data-toggle="tooltip" title="System Settings">
+                <i class="fas fa-cog"></i>
+            </a>
+        </li>
+
+        <!-- Sign Out -->
+        <li class="nav-item">
+            <form id="frmSignOut">
+                <button type="button" onclick="SignOutAction()" id="btnSignOut"
+                        class="btn btn-signout-header">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>@localizer["Sign Out"]</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</nav>
+
+<!-- Stripe Purchase Handler Script -->
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script src="~/js/LoginOperation.js"></script>
+<script>
+    // Initialize tooltips
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    // Handle Stripe Purchase
+    function handleStripePurchase() {
+        const btn = document.getElementById('btnStripePurchase');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 28px;"></i> <span>Processing...</span>';
+        btn.disabled = true;
+
+        const purchaseWindow = window.open('https://app.zerobytebd.com/business-erp', '_blank', 'width=900,height=700');
+        
+        setTimeout(function() {
+            try {
+                if (purchaseWindow && !purchaseWindow.closed) {
+                    purchaseWindow.postMessage({
+                        action: 'triggerPurchase',
+                        productId: 'business-erp',
+                        productPrice: 69
+                    }, 'https://app.zerobytebd.com');
+                    
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success('Purchase window opened! Complete your purchase in the new window.', 'Success');
+                    }
+                }
+            } catch (e) {
+                console.log('Cross-origin restriction - purchase page opened in new window');
+            }
+            
+            setTimeout(function() {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }, 2000);
+        }, 1000);
+    }
+
+    window.addEventListener('message', function(event) {
+        if (event.origin === 'https://app.zerobytebd.com') {
+            if (event.data.status === 'purchase_completed') {
+                if (typeof toastr !== 'undefined') {
+                    toastr.success('Purchase completed successfully!', 'Success');
+                }
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
+            }
+        }
+    });
+</script>

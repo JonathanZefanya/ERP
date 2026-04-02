@@ -1,0 +1,293 @@
+@model BusinessERP.Models.DamageItemDeatilsViewModel.DamageItemAdjustmentViewModel
+
+@{
+    ViewData["Title"] = "Damage Item Adjustment";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="frmAdjustment">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="DamageItemId" id="DamageItemId" />
+                <input type="hidden" asp-for="ItemId" id="ItemId" />
+
+                <div class="alert alert-info">
+                    <h5><strong>Damage Item Information</strong></h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Item:</strong> @Model.ItemName</p>
+                            <p><strong>Supplier:</strong> @Model.SupplierName</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Current Stock:</strong> <span
+                                    class="badge badge-success">@Model.CurrentStock</span></p>
+                        </div>
+                    </div>
+                    <hr style="margin: 10px 0;" />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p><strong>Total Damaged:</strong><br />
+                                <span class="badge badge-danger" style="font-size: 16px;">@Model.TotalDamageItem</span>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>Adjusted So Far:</strong><br />
+                                <span class="badge badge-info" style="font-size: 16px;">@Model.TotalAdjustedSoFar</span>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>Remaining:</strong><br />
+                                <span class="badge badge-warning"
+                                    style="font-size: 16px;">@Model.RemainingToAdjust</span>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>Adjustment %:</strong><br />
+                                <span class="badge badge-primary" style="font-size: 16px;">
+                                    @(Model.TotalDamageItem > 0 ? Math.Round((decimal)Model.TotalAdjustedSoFar /
+                                                                        Model.TotalDamageItem * 100, 1) : 0)%
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    @if (Model.RemainingToAdjust == 0)
+                    {
+                        <div class="alert alert-success" style="margin-top: 10px; margin-bottom: 0;">
+                            <i class="fa fa-check-circle"></i> <strong>Fully Adjusted:</strong> All damaged items have been
+                            adjusted.
+                        </div>
+                    }
+                    else if (Model.TotalAdjustedSoFar > 0)
+                    {
+                        <div class="alert alert-warning" style="margin-top: 10px; margin-bottom: 0;">
+                            <i class="fa fa-info-circle"></i> <strong>Partially Adjusted:</strong> @Model.RemainingToAdjust
+                            items remaining to adjust.
+                        </div>
+                    }
+                </div>
+
+
+                <hr />
+
+                <div class="form-group">
+                    <label asp-for="AdjustmentQuantity" class="control-label"></label>
+                    <input asp-for="AdjustmentQuantity" id="AdjustmentQuantity" class="form-control" type="number"
+                        min="0" max="@Model.TotalDamageItem" placeholder="Enter quantity received from supplier"
+                        required />
+                    <small class="form-text text-muted">
+                        Maximum: @Model.TotalDamageItem (Total damaged items)
+                    </small>
+                    <span asp-validation-for="AdjustmentQuantity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AdjustmentReason" class="control-label"></label>
+                    <textarea asp-for="AdjustmentReason" id="AdjustmentReason" class="form-control" rows="3"
+                        placeholder="E.g., Supplier replaced damaged items, Partial replacement, etc."
+                        required></textarea>
+                    <span asp-validation-for="AdjustmentReason" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AdjustmentDate" class="control-label"></label>
+                    <input asp-for="AdjustmentDate" id="AdjustmentDate" class="form-control" type="date" required />
+                    <span asp-validation-for="AdjustmentDate" class="text-danger"></span>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <button type="button" onclick="SaveAdjustment()" class="btn btn-success">
+                        <i class="fa fa-check"></i> Save Adjustment
+                    </button>
+                    <button type="button" id="btnCloseAdjustment" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Close
+                    </button>
+                    <button type="button" onclick="ViewAdjustmentHistory()" class="btn btn-info">
+                        <i class="fa fa-history"></i> View History
+                    </button>
+                </div>
+            </form>
+
+            <div id="adjustmentHistory" style="display:none; margin-top: 20px;">
+                <h5>Adjustment History</h5>
+                <table class="table table-bordered table-sm" id="tblAdjustmentHistory">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Reason</th>
+                            <th>Created By</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Set today's date as default
+        var today = new Date().toISOString().split('T')[0];
+        $('#AdjustmentDate').val(today);
+
+        // Validate adjustment quantity on input
+        $('#AdjustmentQuantity').on('input', function () {
+            var maxQty = parseInt('@Model.TotalDamageItem');
+            var enteredQty = parseInt($(this).val());
+
+            if (enteredQty > maxQty) {
+                $(this).val(maxQty);
+                Swal.fire({
+                    title: 'Warning',
+                    text: 'Adjustment quantity cannot exceed total damaged items (' + maxQty + ')',
+                    icon: 'warning'
+                });
+            }
+        });
+    });
+
+
+    function SaveAdjustment() {
+        if (!$("#frmAdjustment").valid()) {
+            SwalSimpleAlert("Please fill all required fields correctly", "info");
+            return;
+        }
+
+        var adjustmentQty = parseInt($('#AdjustmentQuantity').val());
+        var maxQty = parseInt('@Model.TotalDamageItem');
+
+        if (!adjustmentQty || adjustmentQty <= 0) {
+            SwalSimpleAlert("Please enter a valid adjustment quantity greater than 0", "info");
+            return;
+        }
+
+        if (adjustmentQty > maxQty) {
+            SwalSimpleAlert("Adjustment quantity cannot exceed total damaged items (" + maxQty + ")", "info");
+            return;
+        }
+
+        var confirmMsg = "You are about to add " + adjustmentQty + " items back to inventory.\n\n" +
+            "This action will update the current stock.\n\n" +
+            "Do you want to proceed?";
+
+        Swal.fire({
+            title: 'Confirm Adjustment',
+            html: '<p>You are about to add <strong>' + adjustmentQty + '</strong> items back to inventory.</p>' +
+                '<p>This action will update the current stock.</p>' +
+                '<p>Do you want to proceed?</p>',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Save Adjustment',
+            cancelButtonText: 'Cancel',
+            allowOutsideClick: false,
+            allowEscapeKey: true,
+            reverseButtons: false
+        }).then((result_confirmation) => {
+            if (result_confirmation.value) {
+                var formData = {
+                    DamageItemId: $('#DamageItemId').val(),
+                    ItemId: $('#ItemId').val(),
+                    AdjustmentQuantity: $('#AdjustmentQuantity').val(),
+                    AdjustmentReason: $('#AdjustmentReason').val(),
+                    AdjustmentDate: $('#AdjustmentDate').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/DamageItemDetails/SaveAdjustment",
+                    data: formData,
+                    success: function (result) {
+                        SwalSimpleAlert("Success: " + result, "success");
+                        document.getElementById("btnCloseAdjustment").click();
+                        $('#tblDamageItemDeatils').DataTable().ajax.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", xhr, status, error);
+                        alert("Error: " + (xhr.responseText || error));
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    function ViewAdjustmentHistory() {
+        var damageItemId = $('#DamageItemId').val();
+
+        $.ajax({
+            type: "GET",
+            url: "/DamageItemDetails/GetAdjustmentHistory?damageItemId=" + damageItemId,
+            success: function (data) {
+                console.log("Adjustment history data:", data);
+                if (data && data.length > 0) {
+                    var tbody = $('#tblAdjustmentHistory tbody');
+                    tbody.empty();
+
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.AdjustmentDate + '</td>' +
+                            '<td><span class="badge badge-success">' + item.AdjustmentQuantity + '</span></td>' +
+                            '<td>' + item.AdjustmentReason + '</td>' +
+                            '<td>' + item.CreatedBy + '</td>' +
+                            '</tr>';
+                        tbody.append(row);
+                    });
+
+                    $('#adjustmentHistory').slideDown();
+                } else {
+                    Swal.fire({
+                        title: 'No History',
+                        text: 'No adjustment history found for this damage item.',
+                        icon: 'info'
+                    });
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to load adjustment history',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
+
+<style>
+    .alert-info {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    #adjustmentHistory {
+        animation: slideDown 0.3s ease-in-out;
+    }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

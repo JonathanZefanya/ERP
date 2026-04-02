@@ -1,0 +1,103 @@
+﻿@model BusinessERP.Models.AccountViewModels.LoginViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div id="auth-form">
+    <div class="form-header">
+        <h2>@localizer["Welcome Back"]</h2>
+        <p>@localizer["Please sign in to your account"]</p>
+    </div>
+
+    <form id="frmLogin">
+        <input type="hidden" asp-for="Longitude" id="Longitude" />
+        <input type="hidden" asp-for="Latitude" id="Latitude" />
+        
+        <div class="form-group">
+            <label for="Email">@localizer["Email Address"]</label>
+            <div class="input-wrapper">
+                <input class="form-control" 
+                       asp-for="Email" 
+                       id="Email" 
+                       type="email" 
+                       name="email" 
+                       autofocus
+                       placeholder="@localizer["Enter your email"]">
+                <i class="fas fa-envelope input-icon"></i>
+            </div>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Password">@localizer["Password"]</label>
+            <div class="input-wrapper">
+                <input class="form-control" 
+                       asp-for="Password" 
+                       id="Password" 
+                       type="password" 
+                       name="password" 
+                       required
+                       placeholder="@localizer["Enter your password"]">
+                <i class="fas fa-lock input-icon"></i>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="checkbox-wrapper">
+            <div class="custom-checkbox">
+                <input id="checkbox-signup" type="checkbox" name="remember">
+                <label for="checkbox-signup">@localizer["Remember Me"]</label>
+            </div>
+            <a asp-action="ForgotPassword" class="forgot-link">
+                <i class="fas fa-lock"></i>
+                @localizer["Forgot Password?"]
+            </a>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="button" 
+                    id="btnUserLogin"
+                    class="btn-primary-custom"
+                    onclick="LoginAction()">
+                <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
+                @localizer["Log In"]
+            </button>
+        </div>
+
+        <div class="signup-section">
+            <p>
+                @localizer["Don't have an account?"]
+                <a asp-action="Register" class="signup-link">
+                    @localizer["Sign Up"] <i class="fas fa-arrow-right" style="font-size: 12px; margin-left: 4px;"></i>
+                </a>
+            </p>
+        </div>
+    </form>
+
+    @* <div class="row">
+        <div class="col-sm-12" id="divLoginInfo"></div>
+    </div> *@
+</div>
+
+<script src="~/js/LoginOperation.js"></script>
+<script src="~/js/UserInfoFromBrowser/UserInfoFromBrowser_CRUD.js"></script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        $(document).ready(async function () {
+            SetLoginInfo('divLoginInfo');
+            SaveMetaData();
+            await UpdateAppLogo('imgBusinessERPLogo_AdminLogin');
+            
+            // Add enter key support
+            $('#frmLogin input').keypress(function(e) {
+                if(e.which == 13) {
+                    $('#btnUserLogin').click();
+                }
+            });
+        });
+    </script>
+}

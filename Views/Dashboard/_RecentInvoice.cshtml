@@ -1,0 +1,89 @@
+﻿@model BusinessERP.Models.DashboardViewModel.DashboardSummaryViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<div class="invoice-container">
+    <div class="invoice-card">
+        <div class="invoice-header">
+            <h3 class="invoice-title">
+                <i class="bi bi-receipt"></i>
+                @localizer["Recent Invoice"]
+            </h3>
+            <a href="@Url.Action("Index", "Payment")" class="btn btn-sm btn-primary">
+                <i class="bi bi-eye"></i> View All
+            </a>
+        </div>
+        <div class="invoice-body">
+            <div class="table-responsive">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th><i class="bi bi-hash"></i> @localizer["SL"]</th>
+                            <th><i class="bi bi-file-text"></i> @localizer["Invoice No"]</th>
+                            <th><i class="bi bi-person"></i> @localizer["Customer Name"]</th>
+                            <th><i class="bi bi-currency-dollar"></i> @localizer["Amount"]</th>
+                            <th><i class="bi bi-check-circle"></i> @localizer["Paid Amount"]</th>
+                            <th><i class="bi bi-exclamation-circle"></i> @localizer["Due Amount"]</th>
+                            <th><i class="bi bi-info-circle"></i> @localizer["Payment Status"]</th>
+                            <th><i class="bi bi-calendar3"></i> @localizer["Invoice Date"]</th>
+                            <th><i class="bi bi-gear"></i> @localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var countSL = 1;
+                            foreach (var item in Model.listRecentInvoiceViewModel)
+                            {
+                                <tr>
+                                    <td>@countSL</td>
+                                    <td>
+                                        <a href='#' class='invoice-link' onclick="Details('@item.Id')">
+                                            <strong>@item.InvoiceNo</strong>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-person-circle text-muted"></i>
+                                        @item.CustomerName
+                                    </td>
+                                    <td><span class="amount">@item.Amount</span></td>
+                                    <td><span class="amount paid">@item.PaidAmount</span></td>
+                                    <td><span class="amount due">@item.DueAmount</span></td>
+                                    <td>
+                                        @if (item.PaymentStatus == "Paid")
+                                        {
+                                            <span class="status-badge status-paid">
+                                                <i class="bi bi-check-circle-fill"></i> Paid
+                                            </span>
+                                        }
+                                        @if (item.PaymentStatus == "Unpaid")
+                                        {
+                                            <span class="status-badge status-unpaid">
+                                                <i class="bi bi-x-circle-fill"></i> Unpaid
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-calendar-event text-muted"></i>
+                                        @item.InvoiceDate.ToString("MMM dd, yyyy HH:mm")
+                                    </td>
+                                    <td>
+                                        <button class="btn-action btn-print" onclick="PrintPaymentInvoice('@item.Id')" title="Print Invoice">
+                                            <i class="bi bi-printer"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                countSL++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Payment/Payment_CRUD.js"></script>
+<script>
+    var PrintInvoice = function (PaymentId) {
+        location.href = "/Transactions/PrintInvoice?PaymentId=" + PaymentId;
+    };
+</script>

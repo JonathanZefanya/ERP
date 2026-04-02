@@ -1,0 +1,142 @@
+﻿@using Microsoft.Extensions.Options;
+@inject IOptions<BusinessERP.Models.CommonViewModel.ApplicationInfo> _ApplicationInfo
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    Layout = null;
+    var culture = Context.Features.Get<Microsoft.AspNetCore.Localization.IRequestCultureFeature>();
+    var dir = culture.RequestCulture.UICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var twoLetter = culture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+}
+
+<!DOCTYPE html>
+<html lang="@twoLetter" dir="@dir">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="~/images/favicon.ico" type="image/gif" sizes="16x16">
+
+    <title>@ViewData["Title"] - @_ApplicationInfo.Value.ShortName</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="~/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="~/AdminLTE/dist/css/adminlte.min.css">
+    @if (dir == "rtl")
+    {
+        <link rel="stylesheet" href="~/css/rtl.css" />
+    }
+    <!-- Toastr -->
+    <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Custom Login UI -->
+    <link href="~/css/LoginUI.css" rel="stylesheet" />
+    <link href="~/css/AdminHeaderStyles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Side - Form Section -->
+            <div class="col-xs-12 col-lg-5" id="form-section">
+                <div id="auth-logo">
+                    <h1>@localizer["Business ERP Solution"]</h1>
+                </div>
+
+                @RenderBody()
+            </div>
+
+            <!-- Right Side - Enhanced Background Section -->
+            <div class="col-lg-7 visible-lg" id="background-section"
+                style="background-image: url('/images/Login_bg/d11.jpg');">
+
+                <!-- Floating Particles -->
+                <div class="particles-container">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+
+                <!-- Decorative Circles -->
+                <div class="deco-circle deco-circle-1"></div>
+                <div class="deco-circle deco-circle-2"></div>
+
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="btn btn-language">
+                        <i class="fas fa-globe"></i>
+                        <span>@localizer["Language"]</span>
+                    </button>
+                    @await Html.PartialAsync("_CulturePartial")
+                </div>
+
+                <!-- Main Content -->
+                <div class="background-content">
+                    <!-- Logo Section -->
+                    <div class="brand-logo-wrapper">
+                        <img src='~/images/apple-touch-icon.png' alt="Business ERP Logo"
+                            id="imgBusinessERPLogo_AdminLogin" class="brand-image img-circle elevation-3">
+                    </div>
+
+                    <!-- Welcome Text -->
+                    <div class="welcome-text">
+                        <h2>@localizer["Welcome to Business ERP"]</h2>
+                        <p>@localizer["Your complete enterprise resource planning solution for modern businesses"]</p>
+                    </div>
+
+                    <!-- Feature Cards -->
+                    <div class="feature-cards">
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>@localizer["Secure"]</span>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-bolt"></i>
+                            <span>@localizer["Fast"]</span>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-chart-line"></i>
+                            <span>@localizer["Powerful"]</span>
+                        </div>
+                    </div>
+
+                    <!-- Alternative Login -->
+                    <div>
+                        <a href="@Url.Action("Login", "Account")" class="alternative-login">
+                            <i class="fas fa-user-circle"></i>
+                            @localizer["Or sign in as a different user"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE/dist/js/adminlte.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <link href="~/AdminLTE/plugins/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Custom Scripts -->
+    <script src="~/js/zconfig.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
+    <script src="~/lib/loadingoverlay.js"></script>
+    <script src="~/lib/ua-parser.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

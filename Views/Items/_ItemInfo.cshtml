@@ -1,0 +1,25 @@
+<div class="card card-primary card-outline card-tabs">
+    <div class="card-header p-0 pt-1 border-bottom-0">
+        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="Tab1" data-toggle="pill" href="#divTab1" role="tab" aria-controls="Tab1"
+                    aria-selected="true">Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="Tab2" data-toggle="pill" href="#divTab2" role="tab" aria-controls="Tab2"
+                    aria-selected="true">Price Details</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content" id="tabContent">
+            <div class="tab-pane fade show active" id="divTab1" role="tabpanel" aria-labelledby="divTab1">
+                <partial name="_ItemDetails" />
+            </div>
+            <div class="tab-pane fade show" id="divTab2" role="tabpanel" aria-labelledby="divTab2">
+                <partial name="_ItemPriceDetails" />
+            </div>
+        </div>
+    </div>
+</div>

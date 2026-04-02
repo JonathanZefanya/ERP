@@ -1,0 +1,36 @@
+@model BusinessERP.Models.EmployeeViewModel.EmployeeCRUDViewModel
+
+
+<div class="card card-primary card-outline card-tabs">
+    <div class="card-header p-0 pt-1 border-bottom-0">
+        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="EmployeeDetails" data-toggle="pill" href="#divEmployeeDetails" role="tab"
+                   aria-controls="EmployeeDetails" aria-selected="true">Employee Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="AssignedAsset" data-toggle="pill" href="#divAssignedAsset" role="tab"
+                   aria-controls="AssignedAsset" aria-selected="true">Assigned Asset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="AssetHistory" data-toggle="pill" href="#divAssetHistory" role="tab"
+                   aria-controls="AssetHistory" aria-selected="true">Asset History</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content" id="tabContent">
+            <div class="tab-pane fade show active" id="divEmployeeDetails" role="tabpanel"
+                 aria-labelledby="divEmployeeDetails">
+                <partial name="_Details.cshtml" />
+            </div>
+            <div class="tab-pane fade show" id="divAssignedAsset" role="tabpanel" aria-labelledby="divAssignedAsset">
+                <h2>TBD.</h2>
+            </div>
+            <div class="tab-pane fade show" id="divAssetHistory" role="tabpanel" aria-labelledby="divAssetHistory">
+                <h2>TBD.</h2>
+            </div>
+        </div>
+    </div>
+</div>

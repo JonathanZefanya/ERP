@@ -1,0 +1,23 @@
+﻿@using Microsoft.Extensions.Options;
+@inject IOptions<BusinessERP.Models.CommonViewModel.ApplicationInfo> _ApplicationInfo;
+
+<aside class="control-sidebar control-sidebar-dark">
+</aside>
+
+<footer class="main-footer no-print" style="">
+    <div class="row">
+        <div class="col-sm-12 d-none d-sm-inline-block">
+            <div id="divContactDetails"></div>
+        </div>
+        <div class="col-sm-12 text-right d-none d-sm-inline-block">
+            @_ApplicationInfo.Value.Version
+        </div>
+    </div>
+</footer>
+
+<script>
+    $(document).ready(async function () {
+        SetHeaderElements('panelHeaderElements');
+        await UpdateAppLogo('imgBusinessERPLogo_AdminSidebar');
+    });
+</script>

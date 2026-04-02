@@ -1,0 +1,322 @@
+﻿@model BusinessERP.Models.CompanyInfoViewModel.CompanyInfoCRUDViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Company Info";
+}
+
+<div class="wrapper">
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div style="display: inline-block;">
+                <h3 class="pull-right"><b>@localizer["Company Info"]</b></h3>
+            </div>
+        </div>
+        <div class="panel-body scroll panel-height">
+            <form id="frmCompanyInfo" enctype="multipart/form-data">
+                <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden" asp-for="@Model.Logo" />
+                <input type="hidden" asp-for="@Model.CreatedDate" />
+                <input type="hidden" asp-for="@Model.CreatedBy" />
+                <table class="CustomBlueTable">
+                    <tr>
+                        <th>@localizer["Name"]</th>
+                        <td>
+                            <input asp-for="Name" class="form-control" autofocus />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Logo"]</th>
+                        <td>
+                            <input type="file" id="LogoDetails" asp-for="LogoDetails"
+                                onchange="displayThumbnail('LogoDetails', 'imgECommAppLogo_EditCompany')" />
+                            <img src='@Model.Logo' alt="ECommApp Logo" id="imgECommAppLogo_EditCompany"
+                                class="brand-image img-circle elevation-3" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Currency"]</th>
+                        <td>
+                            <select asp-for="CurrencyId" id="CurrencyId" style="width: 100%;"
+                                asp-items="@ViewBag.ddlCurrency" class="form-control" required>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Item Vat Percentage"]</th>
+                        <td>
+                            <select asp-for="ItemVatPercentageId" id="ItemVatPercentageId" style="width: 100%;"
+                                asp-items="@ViewBag.ddlVatPercentage" class="form-control" required>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Default SMTP"]</th>
+                        <td>
+                            <select asp-for="DefaultSMTPId" id="DefaultSMTPId" style="width: 100%;"
+                                asp-items="@ViewBag.ddlEmailConfig" class="form-control" required>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>@localizer["Invoice No Prefix"]</th>
+                        <td>
+                            <input asp-for="InvoiceNoPrefix" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Quote No Prefix"]</th>
+                        <td>
+                            <input asp-for="QuoteNoPrefix" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Address"]</th>
+                        <td>
+                            <input asp-for="Address" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Country"]</th>
+                        <td>
+                            <input asp-for="Country" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Phone"]</th>
+                        <td>
+                            <input asp-for="Phone" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Email"]</th>
+                        <td>
+                            <input asp-for="Email" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Fax"]</th>
+                        <td>
+                            <input asp-for="Fax" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@localizer["Website"]</th>
+                        <td>
+                            <input asp-for="Website" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Shop No"]</label></th>
+                        <td>
+                            <input asp-for="ShopNo" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Street Name"]</label></th>
+                        <td>
+                            <input asp-for="StreetName" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Post Code"]</label></th>
+                        <td>
+                            <input asp-for="PostCode" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label asp-for="Office" class="control-label">@localizer["Office"]</label></th>
+                        <td>
+                            <input asp-for="Office" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Mobile"]</label></th>
+                        <td>
+                            <input asp-for="Mobile" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Host Name"]</label></th>
+                        <td>
+                            <input asp-for="HostName" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Terms And Condition"]</label></th>
+                        <td>
+                            <textarea asp-for="TermsAndCondition" id="TermsAndCondition" class="form-control"
+                                rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Terms And Condition Item Sale"]</label></th>
+                        <td>
+                            <textarea asp-for="TermsAndConditionItemSale" id="TermsAndConditionItemSale"
+                                class="form-control" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Company Number"]</label></th>
+                        <td>
+                            <input asp-for="CompanyNumber" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Vat Number"]</label></th>
+                        <td>
+                            <input asp-for="VatNumber" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Card Percentage"]</label></th>
+                        <td>
+                            <input asp-for="CardPercentage" class="form-control" type="number" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Item VAT Enabled"]</label></th>
+                        <td>
+                            <input asp-for="IsVat" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Item Discount Percentage"]</label></th>
+                        <td>
+                            <input asp-for="IsItemDiscountPercentage" class="form-control" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label class="control-label">@localizer["Item Vat Title"]</label></th>
+                        <td>
+                            <input asp-for="VatTitle" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">@localizer["Invoice Right Margin Percentage"]</label></th>
+                        <td>
+                            <input asp-for="InvoiceRightMarginPercentage" class="form-control" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button type="button" id="btnUpdateInfo" onclick="UpdateCompanyInfo()" value="Update Info"
+                                class="btn btn-danger btn-sm">@localizer["Update Info"]</button>
+
+                            <a type="button" asp-action="Index" class="btn btn-info btn-sm">@localizer["Cancel"]</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 25px;
+    }
+
+    .panel-body {
+        padding: 0px 25px 0px 25px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+
+    .CustomBlueTable td,
+    #CustomBlueTable th {
+        padding: 5px;
+    }
+</style>
+
+
+<script>
+    var UpdateCompanyInfo = function () {
+        if (!$("#frmCompanyInfo").valid()) {
+            return;
+        }
+        var _PreparedFormObj = PreparedFormObj();
+        $("#btnUpdateInfo").val("Please Wait");
+        $('#btnUpdateInfo').attr('disabled', 'disabled');
+        $.ajax({
+            type: "POST",
+            url: "/CompanyInfo/Edit",
+            data: _PreparedFormObj,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                //Update Company Info Local Storage
+                storeCompanyInfo(result.ModelObject);
+                Swal.fire({
+                    title: "CompanyInfo Updated Successfully",
+                    icon: "success"
+                }).then(function () {
+                    location.href = "/CompanyInfo/Index";
+                });
+            },
+            error: function (response) {
+                SwalSimpleAlert(response.responseText, "warning");
+            }
+        });
+    }
+
+    var PreparedFormObj = function () {
+        var _FormData = new FormData()
+        _FormData.append('Id', $("#Id").val())
+        _FormData.append('CreatedDate', $("#CreatedDate").val())
+        _FormData.append('CreatedBy', $("#CreatedBy").val())
+        _FormData.append('LogoDetails', $('#LogoDetails')[0].files[0])
+        _FormData.append('CurrencyId', $("#CurrencyId").val())
+        _FormData.append('ItemVatPercentageId', $("#ItemVatPercentageId").val())
+        _FormData.append('DefaultSMTPId', $("#DefaultSMTPId").val())
+
+        _FormData.append('Name', $("#Name").val())
+        _FormData.append('InvoiceNoPrefix', $("#InvoiceNoPrefix").val())
+        _FormData.append('QuoteNoPrefix', $("#QuoteNoPrefix").val())
+        _FormData.append('Address', $("#Address").val())
+        _FormData.append('City', $("#City").val())
+        _FormData.append('Country', $("#Country").val())
+        _FormData.append('Phone', $("#Phone").val())
+        _FormData.append('Email', $("#Email").val())
+        _FormData.append('Fax', $("#Fax").val())
+        _FormData.append('Website', $("#Website").val())
+
+        _FormData.append('ShopNo', $("#ShopNo").val())
+        _FormData.append('StreetName', $("#StreetName").val())
+        _FormData.append('PostCode', $("#PostCode").val())
+        _FormData.append('Office', $("#Office").val())
+        _FormData.append('Mobile', $("#Mobile").val())
+
+        _FormData.append('HostName', $("#HostName").val())
+        _FormData.append('TermsAndCondition', $("#TermsAndCondition").val())
+        _FormData.append('TermsAndConditionItemSale', $("#TermsAndConditionItemSale").val())
+        _FormData.append('CompanyNumber', $("#CompanyNumber").val())
+
+        _FormData.append('VatNumber', $("#VatNumber").val())
+        _FormData.append('CardPercentage', $("#CardPercentage").val())
+
+        if ($('#IsVat').prop('checked')) {
+            _FormData.append('IsVat', true)
+        } else {
+            _FormData.append('IsVat', false)
+        }
+
+        if ($('#IsItemDiscountPercentage').prop('checked')) {
+            _FormData.append('IsItemDiscountPercentage', true)
+        } else {
+            _FormData.append('IsItemDiscountPercentage', false)
+        }
+
+        _FormData.append('VatTitle', $("#VatTitle").val())
+        _FormData.append('InvoiceRightMarginPercentage', $("#InvoiceRightMarginPercentage").val())
+        return _FormData;
+    }
+</script>

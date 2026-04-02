@@ -1,0 +1,1254 @@
+﻿@model BusinessERP.Models.DashboardViewModel.SharedUIDataViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="@Url.Action("Index", "Dashboard")" class="brand-link">
+        <img src='~/images/apple-touch-icon.png' alt="Business ERP Logo" id="imgBusinessERPLogo_AdminSidebar"
+            class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">@localizer["Business ERP"]</span>
+    </a>
+
+    <div class="sidebar">
+        @if (Model.MainMenuViewModel.UserProfile)
+        {
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="@Model.UserProfile.ProfilePicture" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="@Url.Action("Index", "UserProfile")" class="d-block">
+                        @Model.UserProfile.FirstName @Model.UserProfile.LastName
+                    </a>
+                </div>
+            </div>
+        }
+        <!-- Add loading indicator -->
+        <div class="sidebar-loading" style="display: none;">
+            <div class="text-center py-3">
+                <i class="fas fa-spinner fa-spin fa-2x text-light"></i>
+            </div>
+        </div>
+        <div class="sidebar-search mt-3 mb-3 px-3">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-sm" placeholder="@localizer["Search menu..."]"
+                    id="sidebarSearch" aria-label="Search menu">
+                <div class="input-group-append">
+                    <button class="btn btn-sm btn-primary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @if (Model.MainMenuViewModel.BusinessERP)
+                {
+                    <li class="nav-item">
+                        <a href="@MainMenu.BusinessERP.Path" class="nav-link active">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                @localizer[@MainMenu.BusinessERP.PageName]
+                                <span class="right badge badge-danger">@localizer["New"]</span>
+                            </p>
+                        </a>
+                    </li>
+                }
+                @if (Model.MainMenuViewModel.CustomerInfo)
+                {
+                    <li class="nav-item">
+                        <a href="@MainMenu.CustomerInfo.Path" class="nav-link active" menu-green>
+                            <img src="/images/side_menu/customer3.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer[@MainMenu.CustomerInfo.PageName]
+                            </p>
+                        </a>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.ItemCart)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: green;">
+                            <img src="/images/side_menu/pos.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer["POS"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.ItemCartSideInvoice)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ItemCartSideInvoice.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>@localizer[@MainMenu.ItemCartSideInvoice.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ItemCart)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ItemCart.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.ItemCart.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.ManageInvoice)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: green;">
+                            <img src="/images/side_menu/invoice.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer["Manage Sales"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Invoice)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Invoice.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-money-bill"></i>
+                                        <p>@localizer[@MainMenu.Invoice.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ManualInvoice)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ManualInvoice.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-desktop"></i>
+                                        <p>@localizer[@MainMenu.ManualInvoice.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.DraftInvoice)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.DraftInvoice.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>@localizer[@MainMenu.DraftInvoice.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.QuoteInvoice)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.QuoteInvoice.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>@localizer[@MainMenu.QuoteInvoice.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.SalesReturnLog)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.SalesReturnLog.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-solid fa-history"></i>
+                                        <p>@localizer[@MainMenu.SalesReturnLog.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.PurchasesPayment)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <img src="/images/side_menu/buy.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer["Manage Purchases"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.PurchasesPayment)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesPayment.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user-cog"></i>
+                                        <p>@localizer["Purchases Invoice"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchasesPaymentDraft)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesPaymentDraft.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-history"></i>
+                                        <p>@localizer[@MainMenu.PurchasesPaymentDraft.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchasesPaymentQuote)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesPaymentQuote.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-star"></i>
+                                        <p>@localizer[@MainMenu.PurchasesPaymentQuote.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Supplier)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Supplier.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user-cog"></i>
+                                        <p>@localizer[@MainMenu.Supplier.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchaseReturnLog)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchaseReturnLog.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-solid fa-history"></i>
+                                        <p>@localizer[@MainMenu.PurchaseReturnLog.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.Expense)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-desktop"></i>
+                            <p>
+                                @localizer["Manage Expense"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.ExpenseSummary)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseSummary.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-coffee"></i>
+                                        <p>@localizer[@MainMenu.ExpenseSummary.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ExpenseType)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseType.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>@localizer[@MainMenu.ExpenseType.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.IncomeSummary)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: green;">
+                            <img src="/images/side_menu/income.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer["Manage Income"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.IncomeSummary)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.IncomeSummary.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-desktop"></i>
+                                        <p>@localizer[@MainMenu.IncomeSummary.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.IncomeType)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.IncomeType.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-bars"></i>
+                                        <p>@localizer[@MainMenu.IncomeType.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.IncomeCategory)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.IncomeCategory.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-coffee"></i>
+                                        <p>@localizer[@MainMenu.IncomeCategory.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.IncomeSummary)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.IncomeSummaryReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.IncomeSummaryReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.Branch)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-solid fa-code-branch"></i>
+                            <p>
+                                @localizer["Manage Branch"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Branch)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Branch.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-solid fa-list"></i>
+                                        <p>@localizer[@MainMenu.Branch.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.Items)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <img src="/images/side_menu/inventory1.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer[@MainMenu.Items.PageNameRoot]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Items)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Items.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-shopping-basket"></i>
+                                        <p>@localizer[@MainMenu.Items.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.OutOfStock)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.OutOfStock.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-bell"></i>
+                                        <p>@localizer[@MainMenu.OutOfStock.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+
+                            @if (Model.MainMenuViewModel.LowInStock)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.LowInStock.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-clock"></i>
+                                        <p>@localizer[@MainMenu.LowInStock.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.DamageItemDetails)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.DamageItemDetails.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-flag"></i>
+                                        <p>@localizer[@MainMenu.DamageItemDetails.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.DamageItemDetails)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.DamageItemReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-flag"></i>
+                                        <p>@localizer[@MainMenu.DamageItemReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ItemsHistory)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ItemsHistory.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-history"></i>
+                                        <p>@localizer[@MainMenu.ItemsHistory.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.AccAccount)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: grey">
+                            <i class="image">
+                                <img src="/images/side_menu/acc/budget.png" class="img-circle elevation-2" alt="User Image">
+                            </i>
+                            <p>Accounting Module<i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.AccAccount)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AccAccount.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@MainMenu.AccAccount.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.AccDeposit)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AccDeposit.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-envelope"></i>
+                                        <p>@MainMenu.AccDeposit.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.AccExpense)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AccExpense.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-desktop"></i>
+                                        <p>@MainMenu.AccExpense.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.AccTransfer)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AccTransfer.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-flag"></i>
+                                        <p>@MainMenu.AccTransfer.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.AccTransaction)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AccTransaction.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-history"></i>
+                                        <p>@MainMenu.AccTransaction.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.Warehouse)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: grey">
+                            <i class="image">
+                                <img src="/images/side_menu/warehouse3.png" class="img-circle elevation-2" alt="User Image">
+                            </i>
+                            <p>Manage Warehouse<i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Warehouse)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Warehouse.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@MainMenu.Warehouse.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.WarehouseWiseItems)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.WarehouseWiseItems.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-toolbox"></i>
+                                        <p>@MainMenu.WarehouseWiseItems.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ItemRequest)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ItemRequest.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-flag"></i>
+                                        <p>@MainMenu.ItemRequest.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ItemTransferLog)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ItemTransferLog.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-clock"></i>
+                                        <p>@MainMenu.ItemTransferLog.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.WarehouseNotification)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.WarehouseNotification.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-bell"></i>
+                                        <p>@MainMenu.WarehouseNotification.PageName</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.Admin)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <i class="image">
+                                <img src="/images/side_menu/settings.png" class="img-circle elevation-2" alt="User Image">
+                            </i>
+                            <p>
+                                @localizer["System Settings"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.CompanyInfo)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.CompanyInfo.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>@localizer[@MainMenu.CompanyInfo.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Admin)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.SystemSettings.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-key"></i>
+                                        <p>@localizer[@MainMenu.SystemSettings.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+
+                            @if (Model.MainMenuViewModel.EmailConfig)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.EmailConfig.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-envelope"></i>
+                                        <p>@localizer[@MainMenu.EmailConfig.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Currency)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Currency.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.Currency.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PaymentType)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PaymentType.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heartbeat"></i>
+                                        <p>@localizer[@MainMenu.PaymentType.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PaymentStatus)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PaymentStatus.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>@localizer[@MainMenu.PaymentStatus.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+
+                            @if (Model.MainMenuViewModel.CustomerType)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.CustomerType.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>@localizer[@MainMenu.CustomerType.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.VatPercentage)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.VatPercentage.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>@localizer[@MainMenu.VatPercentage.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Categories)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Categories.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-tasks"></i>
+                                        <p>@localizer[@MainMenu.Categories.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.UnitsOfMeasure)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.UnitsofMeasure.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-bolt"></i>
+                                        <p>@localizer[@MainMenu.UnitsofMeasure.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+                @if (Model.MainMenuViewModel.UserManagement)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <img src="/images/side_menu/usersettings.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer["Manage User"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.UserManagement)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.UserManagement.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user-shield"></i>
+                                        <p>@localizer[@MainMenu.UserManagement.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.IdentitySetting)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.IdentitySetting.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-user-secret"></i>
+                                        <p>@localizer[@MainMenu.IdentitySetting.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.SendEmailHistory)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.SendEmailHistory.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-clock"></i>
+                                        <p>@localizer[@MainMenu.SendEmailHistory.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.LoginHistory)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.LoginHistory.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-history"></i>
+                                        <p>@localizer[@MainMenu.LoginHistory.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.AuditLogs)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AuditLogs.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-clock"></i>
+                                        <p>@localizer[@MainMenu.AuditLogs.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+                @if (Model.MainMenuViewModel.ManageUserRoles)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <img src="/images/side_menu/access3.png" class="img-circle elevation-2" alt="User Image">
+                            <p>
+                                @localizer["Manage User Roles"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.ManageUserRoles)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ManageUserRoles.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-desktop"></i>
+                                        <p>@localizer[@MainMenu.ManageUserRoles.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.SystemRole)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.SystemRole.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-toolbox"></i>
+                                        <p>@localizer[@MainMenu.SystemRole.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.Employee)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-desktop"></i>
+                            <p>
+                                @localizer["Human Resource"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Attendance)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Attendance.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-industry"></i>
+                                        <p>@localizer[@MainMenu.Attendance.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Employee)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Employee.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-industry"></i>
+                                        <p>@localizer[@MainMenu.Employee.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Designation)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Designation.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.Designation.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.Department)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.Department.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-star"></i>
+                                        <p>@localizer[@MainMenu.Department.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.SubDepartment)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.SubDepartment.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-desktop"></i>
+                                        <p>@localizer[@MainMenu.SubDepartment.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+                @if (Model.MainMenuViewModel.ItemReport)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: rgb(73, 69, 73);">
+                            <i class="nav-icon fas fa-signal"></i>
+                            <p>
+                                @localizer["Item Report"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Admin)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.StockItemReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.StockItemReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.HighInDemand)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.HighInDemand.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.HighInDemand.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.LowInDemand)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.LowInDemand.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.LowInDemand.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.HighestEarning)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.HighestEarning.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heartbeat"></i>
+                                        <p>@localizer[@MainMenu.HighestEarning.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.LowestEarning)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.LowestEarning.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heartbeat"></i>
+                                        <p>@localizer[@MainMenu.LowestEarning.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.SalesReport)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: rgb(73, 69, 73);">
+                            <i class="nav-icon fas fa-database"></i>
+                            <p>
+                                @localizer["Sales Report"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.Admin)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.CustomerSalesReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-envelope"></i>
+                                        <p>@localizer[@MainMenu.CustomerSalesReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PaymentSummaryReport)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PaymentSummaryReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.PaymentSummaryReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ProductWiseSale)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ProductWiseSale.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.ProductWiseSale.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PaymentDetailReport)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PaymentDetailReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.PaymentDetailReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.TransactionByDay)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.TransactionByDay.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.TransactionByDay.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.TransactionByMonth)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.TransactionByMonth.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.TransactionByMonth.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.TransactionByYear)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.TransactionByYear.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.TransactionByYear.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.PurchasesReport)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: rgb(73, 69, 73);">
+                            <i class="nav-icon fas fa-database"></i>
+                            <p>
+                                @localizer["Purchases Report"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.PurchasesSummary)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesSummary.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.PurchasesSummary.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchasesDetail)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesDetail.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.PurchasesDetail.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchasesTransactionByDay)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesTransactionByDay.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.PurchasesTransactionByDay.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchasesTransactionByMonth)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesTransactionByMonth.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.PurchasesTransactionByMonth.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PurchasesTransactionByYear)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PurchasesTransactionByYear.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.PurchasesTransactionByYear.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.ExpenseReport)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: rgb(73, 69, 73);">
+                            <i class="nav-icon fas fa-clock"></i>
+                            <p>
+                                @localizer["Expense Report"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.ExpenseSummaryReport)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseSummaryReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-database"></i>
+                                        <p>@localizer[@MainMenu.ExpenseSummaryReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ExpenseDetailsReport)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseDetailsReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-star"></i>
+                                        <p>@localizer[@MainMenu.ExpenseDetailsReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ExpenseReportByDay)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseByDay.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.ExpenseByDay.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ExpenseReportByMonth)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseByMonth.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.ExpenseByMonth.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.ExpenseReportByYear)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.ExpenseByYear.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-heart"></i>
+                                        <p>@localizer[@MainMenu.ExpenseByYear.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (Model.MainMenuViewModel.OtherReport)
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link active" style="background-color: rgb(73, 69, 73);">
+                            <i class="nav-icon fas fa-barcode"></i>
+                            <p>
+                                @localizer["Other Report"]
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Model.MainMenuViewModel.SummaryReport)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.SummaryReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-history"></i>
+                                        <p>@localizer[@MainMenu.SummaryReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.AttendanceReport)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.AttendanceReport.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-clock"></i>
+                                        <p>@localizer[@MainMenu.AttendanceReport.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (Model.MainMenuViewModel.PrintBarcode)
+                            {
+                                <li class="nav-item">
+                                    <a href="@MainMenu.PrintBarcode.Path" class="nav-link">
+                                        <i class="nav-icon fas fa-star"></i>
+                                        <p>@localizer[@MainMenu.PrintBarcode.PageName]</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<script>
+    $('#sidebarSearch').on('keyup', function () {
+        var value = $(this).val().toLowerCase();
+        $('.nav-sidebar .nav-item').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+
+    // Add tooltips for collapsed sidebar
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'right',
+            boundary: 'window'
+        });
+    });
+
+    var url = window.location;
+    $('ul.nav-sidebar a').filter(function () {
+        return this.href == url;
+    }).addClass('active');
+
+    $('ul.nav-treeview a').filter(function () {
+        return this.href == url;
+    }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+</script>
+
+<!-- Lazy load menu items -->
+<script>
+    // Load submenu items only when parent is clicked
+    $('.has-treeview > a').on('click', function (e) {
+        if (!$(this).next('.nav-treeview').data('loaded')) {
+            // Load submenu items via AJAX if needed
+            $(this).next('.nav-treeview').data('loaded', true);
+        }
+    });
+</script>
+
+
+<style>
+    /* Modern color palette */
+    :root {
+        --sidebar-bg: #2c3e50;
+        --sidebar-hover: #34495e;
+        --menu-active: #3498db;
+        --menu-green: #27ae60;
+        --menu-grey: #7f8c8d;
+        --menu-purple: #9b59b6;
+        --text-light: #ecf0f1;
+    }
+
+    /* Sidebar styling */
+    .main-sidebar {
+        background: linear-gradient(180deg, var(--sidebar-bg) 0%, #1a252f 100%);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Menu item hover effects */
+    .nav-link {
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover {
+        background-color: var(--sidebar-hover) !important;
+        border-left-color: var(--menu-active);
+        transform: translateX(5px);
+    }
+
+    /* Active menu styling - WHITE TEXT */
+    .nav-link.active {
+        background: linear-gradient(90deg, var(--menu-active) 0%, transparent 100%) !important;
+        border-left-color: #fff;
+        color: #ffffff !important;
+    }
+
+    /* Active menu text - WHITE */
+    .nav-link.active p {
+        color: #ffffff !important;
+    }
+
+    /* Active menu icon - WHITE */
+    .nav-link.active .nav-icon,
+    .nav-link.active i {
+        color: #ffffff !important;
+    }
+
+    /* Icon styling */
+    .nav-icon,
+    .nav-link img {
+        transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover .nav-icon,
+    .nav-link:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Badge styling */
+    .badge-danger {
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.7;
+        }
+    }
+
+    /* Submenu styling */
+    .nav-treeview {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-left: 2px solid var(--menu-active);
+    }
+
+    .nav-treeview .nav-link {
+        padding-left: 3rem;
+    }
+
+    /* Active submenu item - WHITE TEXT */
+    .nav-treeview .nav-link.active {
+        color: #ffffff !important;
+    }
+
+    .nav-treeview .nav-link.active p {
+        color: #ffffff !important;
+    }
+
+    .nav-treeview .nav-link.active .nav-icon,
+    .nav-treeview .nav-link.active i {
+        color: #ffffff !important;
+    }
+
+    /* Color-coded sections */
+    .menu-green {
+        background-color: var(--menu-green) !important;
+    }
+
+    .menu-grey {
+        background-color: var(--menu-grey) !important;
+    }
+
+    .menu-purple {
+        background-color: var(--menu-purple) !important;
+    }
+
+    /* Mobile optimizations */
+    @@media (max-width: 768px) {
+        .main-sidebar {
+            width: 100%;
+            position: fixed;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .main-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .brand-text {
+            font-size: 1.2rem;
+        }
+
+        .nav-link p {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+

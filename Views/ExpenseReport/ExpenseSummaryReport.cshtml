@@ -1,0 +1,77 @@
+<div class="wrapper">
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5>Expense Summary Report</h5>
+                </div>
+                <div class="col-md-4 pull-right">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Branch: </label>
+                        <div class="col-sm-10">
+                            <select id="BranchId" style="width: 100%;" asp-items="@ViewBag.ddlBranch"
+                                onchange="GetBrancWiseExpenseSummarReport()" class="form-control" required>
+                                <option value="0" selected>All Branch</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body scroll panel-height">
+            <table id="tblExpenseSummaryReport" class="BlueGreen" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Grand Total</th>
+                        <th>Paid Amount</th>
+                        <th>Due Amount</th>
+                        <th>Currency</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 5px;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+</style>
+
+<script src="~/js/ExpenseReport/ExpenseSummaryReport_Datatable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#BranchId").select2();
+        DataTableCustomSearchBox('350px', 'Search...');
+    });
+
+    var GetBrancWiseExpenseSummarReport = function () {
+        var _BranchId = $("#BranchId").val();
+
+        var _tblExpenseSummaryReport = $("#tblExpenseSummaryReport").DataTable();
+        _tblExpenseSummaryReport.clear();
+        _tblExpenseSummaryReport.destroy();
+        if (_BranchId == 0) {
+            ExpenseSummarReportDataTableLoad(false, 0);
+        }
+        else {
+            ExpenseSummarReportDataTableLoad(true, _BranchId);
+        }
+        DataTableCustomSearchBox('350px', 'Search...');
+    }
+</script>

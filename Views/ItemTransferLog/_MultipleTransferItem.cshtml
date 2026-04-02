@@ -1,0 +1,113 @@
+﻿<div id="divAddPaymentDetail" class="row" style="overflow-x:auto;">
+    <table id="tblTransferMulipleItem" class="BlueGreen" border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Item</th>
+                <th>From Warehouse</th>
+                <th>To Warehouse</th>
+                <th>Tran Quantity</th>
+                <th>Reason</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot id="tbltblTransferMulipleItemfoot">
+            <tr>
+                <td style="width: 50px;">
+                    <input id="ItemId" type="number" class="unstyled-button" style="width: 50px;" readonly />
+                </td>
+                <td style="width: 300px;">
+                    <label id="ItemName" style="width: 300px;"></label>
+                </td>
+                <td style="width: 100px;">
+                    <input id="FromWarehouseId" type="number" class="unstyled-button" style="width: 50px;" readonly />
+                </td>
+                <td style="width: 100px;">
+                    <input id="ToWarehouseId" type="number" class="unstyled-button" style="width: 50px;" readonly />
+                </td>
+                <td style="width: 100px;">
+                    <input id="TranQuantity" type="number" class="unstyled-button" style="width: 50px;" readonly />
+                </td>
+                <td style="width: 200px;">
+                    <label id="ReasonOfTransfer" style="width: 200px;"></label>
+                </td>
+
+                <td style="width:100px;">                   
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="row" style="margin-top: 5px; margin-right: 10px; margin-bottom: 5px;">
+    <label class="col-sm-11"></label>
+    <div class="col-sm-1">
+        <input type="button" id="btnTransferAllItem" value="Transfer All" onclick="SaveMultiTranItem()"
+            class="btn btn-success">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6 col-sm-6">
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Item</label>
+            <div class="col-sm-8">
+                <select id="ItemIdMultiple" onchange="GetByItemForMultiTran()" style="width: 100%;"
+                    asp-items="@ViewBag.LoadddlInventoryItem" required>
+                    <option value="0" disabled selected>Please Select Item</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">From Warehouse</label>
+            <div class="col-sm-8">
+                <select id="FromWarehouseIdMultiple" asp-items="@ViewBag.ddlWarehouseList" class="form-control"
+                    disabled>
+                    <option value="0" disabled selected>Please Select Item</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">To Warehouse</label>
+            <div class="col-sm-8">
+                <select id="ToWarehouseIdMultiple" onchange="WarehouseValidateForMultiple()" asp-items="@ViewBag.ddlWarehouseList"
+                    class="form-control" required>
+                    <option value="0" disabled selected>Please Select Item</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-sm-6">
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Current Total Stock</label>
+            <div class="col-sm-8">
+                <input id="CurrentTotalStockMultiple" class="form-control" type="number" readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Tran Quantity</label>
+            <div class="col-sm-8">
+                <input id="TotalTransferItemMultiple" onchange="CheckCurrentStockForMultiple()" class="form-control" type="number"
+                    min="1" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Reason Of Transfer</label>
+            <div class="col-sm-8">
+                <textarea id="ReasonOfTransferMultiple" class="form-control" type="text" rows="2" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label"></label>
+            <div class="col-sm-8">
+                <input type="button" id="btnAddItem" value="Add Item" onclick="AddItem()" class="btn btn-success">
+                <button type="button" class="btn btn-danger" onclick="ClearTranItem()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/ItemTransferLog/TransferMultiItem_CRUD.js"></script>
+<script src="~/js/ItemTransferLog/MultipleTransferItem_HtmlTblOpr.js"></script>

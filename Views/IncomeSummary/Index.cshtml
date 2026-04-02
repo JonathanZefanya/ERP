@@ -1,0 +1,92 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <select id="IncomeTypeId" style="width: 100%;"
+                onchange="DisplayIncomeSummaryData()" class="form-control" required>
+                <option value="0" selected>All Type</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select id="IncomeCategoryId" style="width: 100%;"
+                onchange="DisplayIncomeSummaryData()" class="form-control" required>
+                <option value="0" selected>All Category</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="panel panel-hash">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-5">
+                    <a class="fa fa-plus-square fa-2x" onclick="AddEdit(0)"></a>
+                </div>
+                <div class="col-md-7 pull-right">
+                    <h5 class="pull-right"><b>&nbsp;Income Summary List</b></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body scroll panel-height">
+            <table id="tblIncomeSummary" class="ItemTranTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Income Date</th>
+
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel-heading {
+        padding: 0px 0px 0px 5px;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .h4 {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+</style>
+
+<script src="~/js/IncomeSummary/IncomeSummary_CRUD.js"></script>
+<script src="~/js/IncomeSummary/IncomeSummary_Datatable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var _url = "/IncomeType/GetAllType";
+        GetDropDownDataBase("IncomeTypeId", _url);
+        $("#IncomeTypeId").select2();
+
+        var _url = "/IncomeCategory/GetAllCategory";
+        GetDropDownDataBase("IncomeCategoryId", _url);
+        $("#IncomeCategoryId").select2();
+    });
+
+    var DisplayIncomeSummaryData = function () {
+        var _tblIncomeSummary = $("#tblIncomeSummary").DataTable();
+        _tblIncomeSummary.clear();
+        _tblIncomeSummary.destroy();
+
+        var _IncomeTypeId = $("#IncomeTypeId").val();
+        var _IncomeCategoryId = $("#IncomeCategoryId").val();
+
+        GetDatatableData(_IncomeTypeId, _IncomeCategoryId);
+        DataTableCustomSearchBox('450px', 'Search...');
+    }
+</script>

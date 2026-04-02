@@ -1,0 +1,52 @@
+@model BusinessERP.Models.IncomeSummaryViewModel.IncomeSummaryCRUDViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="ItemTranTable">
+            <tr>
+                <th>Id</th>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>@Model.Title</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>@Model.TypeDisplay</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>@Model.CategoryDisplay</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>@Model.Amount</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>@Model.Description</td>
+            </tr>
+            <tr>
+                <th>Income Date</th>
+                <td>@Model.IncomeDate</td>
+            </tr>
+            <tr>
+                <th>Created Date</th>
+                <td>@Model.CreatedDate</td>
+            </tr>
+            <tr>
+                <th>Modified Date</th>
+                <td>@Model.ModifiedDate</td>
+            </tr>
+            <tr>
+                <th>Created By</th>
+                <td>@Model.CreatedBy</td>
+            </tr>
+            <tr>
+                <th>Modified By</th>
+                <td>@Model.ModifiedBy</td>
+            </tr>
+        </table>
+    </div>
+</div>

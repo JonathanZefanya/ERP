@@ -1,0 +1,25 @@
+<div class="erp-dashboard-wrapper">
+    <div class="erp-header-section">
+        <h1 class="erp-main-title">
+            <i class="bi bi-building"></i>
+            Business ERP
+        </h1>
+        <p class="erp-subtitle">Manage your business operations efficiently</p>
+    </div>
+    
+    <div class="erp-content">
+        @{
+            var _IsInRole = User.IsInRole("Admin");
+            if (_IsInRole)
+            {
+                <partial name="_MajorItemAccess" />
+            }
+        }
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        SaveMetaData();
+    }, 2000);
+</script>

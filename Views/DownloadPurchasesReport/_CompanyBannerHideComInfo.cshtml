@@ -1,0 +1,83 @@
+﻿@model BusinessERP.Models.PurchasesPaymentViewModel.PurchasesPaymentReportViewModel
+
+@{
+    ViewData["Title"] = "Invoice Report";
+}
+
+<div class="row">
+    <div class="col-sm-5">
+    </div>
+    <div class="col-sm-7">
+        @if (Model.PurchasesPaymentCRUDViewModel.Category == 1)
+        {
+            <h4 id="titleInvoice"><b>INVOICE</b></h4>
+        }
+        else if (Model.PurchasesPaymentCRUDViewModel.Category == 3)
+        {
+            <h4><b>QUOTE</b></h4>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-7">
+        @if (Model.PurchasesPaymentCRUDViewModel.Category == 1)
+        {
+            <abbr><b>Invoice No: </b></abbr>
+            <span id="InvoiceNo">@Model.PurchasesPaymentCRUDViewModel.InvoiceNo</span>
+
+            <br>
+            <abbr><b>Payment Status: </b></abbr>
+
+            @Model.PurchasesPaymentCRUDViewModel.PaymentStatusDisplay
+
+            <br>
+        }
+        else if (Model.PurchasesPaymentCRUDViewModel.Category == 3)
+        {
+            <abbr><b>Quote No: </b></abbr>
+
+            @Model.PurchasesPaymentCRUDViewModel.QuoteNo
+
+            <br>
+        }
+
+        <abbr><b>Currency: </b></abbr>@Model.PurchasesPaymentCRUDViewModel.CurrencyName<br>
+        <abbr><b>Branch: </b></abbr>@Model.PurchasesPaymentCRUDViewModel.BranchName<br>
+    </div>
+    <div class="col-sm-5 text-right">
+        <div class="m-b-15">
+            <strong>Supplier Name </strong>: @Model.SupplierCRUDViewModel.Name
+        </div>
+        <div class="m-b-15">
+            <strong>Billing Address </strong>: @Model.SupplierCRUDViewModel.Address
+        </div>
+
+        <div class="m-b-15">
+            <strong>Email </strong>: @Model.SupplierCRUDViewModel.Email
+        </div>
+        <div class="m-b-15">
+            <strong>Phone </strong>: @Model.SupplierCRUDViewModel.Phone
+        </div>
+
+
+        <hr />
+        <div class="m-b-15">
+            <strong>Served By </strong>: @Model.PurchasesPaymentCRUDViewModel.CreatedBy
+        </div>
+        <div class="m-b-15">
+            <strong>Print Date </strong>: @DateTime.Today.ToString("dd MMMM yyyy")
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .panel-heading {
+        padding: 0px 0px;
+        border-bottom: 0px solid transparent;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+</style>
+

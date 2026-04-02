@@ -1,0 +1,64 @@
+﻿<div id="divAddPaymentDetail" class="row">
+    <table id="tblPurchasesPaymentDetail" class="BlueGreen" border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Free qty</th>
+                <th>Unit Price</th>
+                <th id="thVAT">VAT(%)</th>
+                <th>Discount(%)</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot id="tblAddLabTeststfoot">
+            <tr>
+                <td style="width:40px;">
+                    <input id="PaymentsDetailsId" type="number" class="unstyled-button" style="width: 40px;" readonly />
+                </td>
+                <td style="width:400px;">
+                    <select id="ItemId" asp-items="@ViewBag.ddlInventoryItem" onchange="UpdateUnitPrice()"
+                            style="width: 100%;">
+                        <option disabled selected>--- SELECT ---</option>
+                    </select>
+                </td>
+                <td style="width:70px;">
+                    <input id="Quantity" type="number" onchange="UpdateItemAllElement()" style="width:70px;" class="" value="1" min="1" />
+                </td>
+                <td style="width:50px;">
+                    <input id="FreeQuantity" type="number" style="width:50px;" class="" value="0" min="0" />
+                </td>
+                <td style="width:70px;">
+                    <select id="UnitPrice" onchange="UpdateItemAllElement()"></select>
+                </td>
+                <td style="width:50px;">
+                    <input id="ItemVAT" type="number" onchange="UpdateItemAllElement()" style="width:50px;" />
+                </td>
+                <td id="tdVAT" style="width:70px;">
+                    <input id="ItemDiscount" type="number" onchange="UpdateItemAllElement()" style="width:70px;" min="0" value="0" maxlength="5" />
+                </td>
+                <td style="width:70px;">
+                    <input id="TotalAmount" type="text" style="width:70px;" class="unstyled-button" readonly />
+                </td>
+                <td style="width:150px;">
+                    <input type="button" id="btnPaymentsDetails" onclick="AddPurchasesPaymentDetail();" value="Add Item"
+                           class="btn btn-info btn-xs" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="~/js/PurchasesPayment/PurchasesPaymentDetail_HtmlTblOpr.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#UnitPrice').select2({
+      tags: true,  // allow custom input
+      placeholder: "Select or type a price"
+    });
+  });
+</script>
+

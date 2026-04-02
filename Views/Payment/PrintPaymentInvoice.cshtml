@@ -1,0 +1,140 @@
+@model BusinessERP.Models.PaymentViewModel.PaymentReportViewModel
+
+@{
+    ViewData["Title"] = "Payment Invoice";
+}
+
+
+<div class="row>
+<input type="hidden" id="CurrentURL" asp-for="PaymentCRUDViewModel.CurrentURL" />
+<input type="hidden" id="Category" asp-for="PaymentCRUDViewModel.Category" />
+<input type="hidden" id="IsSaveAndPrint" asp-for="PaymentCRUDViewModel.IsSaveAndPrint" />
+
+<div class="row col-sm-12">
+    <div class="col-sm-6">
+        <div class="col-sm-6">
+            <select id="PrintDocType" class="form-control" onchange="LoadDynamicPrintDoc();">
+                <option value="1" selected>Print Document</option>
+                <option value="2">Print Picking List</option>
+                <option value="3">Print Delivery Note</option>
+            </select>
+        </div>
+
+        <div class="col-sm-6">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="HideCompanyInfo" value=""> Hide Company Info
+            </label>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="panel-footer text-right">
+            <button class="btn btn-sm btn-danger"
+                onclick="OpenSendMailPaymentInvoice('@Model.PaymentCRUDViewModel.Id')">
+                <span class="fa fa-envelope">
+                    Mail
+                </span>
+            </button>
+            <button class="btn btn-sm btn-success" onclick="PrintPOSReport('@Model.PaymentCRUDViewModel.Id')">
+                <span class="fa fa-print">Thermal</span>
+            </button>
+            <button class="btn btn-sm btn-info" id="btnFullPagePrint" onclick="printDiv('printableArea')">
+                Print
+                <span class="fa fa-print"></span>
+            </button>
+            <button class="btn btn-sm btn-dark" id="btnDownload"
+                onclick="DownloadPaymentInvoice('@Model.PaymentCRUDViewModel.Id')">
+                <span class="fa fa-download"></span>
+            </button>
+            <button class="btn btn-sm btn-dark" onclick="BacktoPreviousPage()">Back</button>
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="col-sm-12" id="divPrintInvoice">
+    <div id="printableArea">
+        <div id="divInvoiceArea">
+            <div id="divCompanyBanner">
+                <partial name="~/Views/DownloadReport/_CompanyBanner.cshtml" />
+            </div>
+            <div id="divCompanyBannerHideComInfo">
+                <partial name="~/Views/DownloadReport/_CompanyBannerHideComInfo.cshtml" />
+            </div>
+
+            <hr />
+            <partial name="~/Views/DownloadReport/_PaymentInvoicePrintableArea.cshtml" />
+
+            <div id="divTermsAndCondition">
+                <hr />
+                <h3 width="100%" align="center" class="bgcolor font-13"
+                    style="padding:10px 0 !important; margin-top:0 !important; margin-bottom:2px !important;">
+                    <strong>Terms and Conditions</strong>
+                </h3>
+
+                <div class="row">
+                    <span style="font-size:8px">@Model.CompanyInfoCRUDViewModel.TermsAndCondition</span>
+                </div>
+
+                <br />
+                <p align="center" class="font-12">
+                    <strong>THANKS FOR YOUR BUSINESS!</strong>
+                </p>
+
+                <p align="center" style="font-size: 10px;">
+                    <strong>
+                        COMPNAY REG NUMBER: <span
+                            id="CompanyNumber">@Model.CompanyInfoCRUDViewModel.CompanyNumber,</span>
+                        VAT NUMBER: <span id="VatNumber"> @Model.CompanyInfoCRUDViewModel.VatNumber</span>
+                    </strong>
+                </p>
+            </div>
+
+            <hr />
+            <div class="col-sm-12" id="divQRCode" align="center">
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="~/js/Payment/PrintPaymentInvoice.js"></script>
+<script src="~/lib/base64.min.js"></script>
+
+<script>
+    $(document).ready(async function () {
+        var _CompanyInfo = await GetCompanyDataFromLS();
+        document.getElementById("divInvoiceArea").style.marginRight = _CompanyInfo.InvoiceRightMarginPercentage + "%";
+        if (_CompanyInfo.IsItemDiscountPercentage == true) {
+            $('#ItemDiscountTitle').html('Discount(%)');
+        }
+        else {
+            $('#ItemDiscountTitle').html('Discount');
+        }
+    });
+
+    var DownloadPaymentInvoice = async function (Id) {
+        $("#btnDownload").LoadingOverlay("show", {
+            background: "rgba(165, 190, 100, 0.5)"
+        });
+        $("#btnDownload").LoadingOverlay("show");
+
+        const { jsPDF } = window.jspdf;
+        let doc = new jsPDF('l', 'mm', [1500, 1400]);
+        //let doc = new jsPDF('p', 'mm', 'a4'); // 'p' for portrait orientation
+        let _divPrint = document.querySelector('#divPrintInvoice');
+
+        var _GetDateWithRandomNumber = GetDateWithRandomNumber('INV_');
+        doc.html(_divPrint, {
+            callback: function (doc) {
+                doc.save("Invoice_" + _GetDateWithRandomNumber + ".pdf");
+            },
+            x: 16,
+            y: 16,
+            html2canvas: { scale: 0.25 },
+        });
+
+        $("#btnDownload").LoadingOverlay("hide", true);
+    }
+</script>

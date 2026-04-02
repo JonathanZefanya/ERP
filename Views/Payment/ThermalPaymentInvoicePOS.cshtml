@@ -1,0 +1,58 @@
+﻿@model BusinessERP.Models.PaymentViewModel.PaymentReportViewModel
+
+<div class="row no-print">
+    <div class="col-sm-6">
+    </div>
+    <div class="col-sm-6">
+        <button id="btnPrintReceipt" class="btn btn-sm btn-primary" onclick="printReceipt('58mm', 0.69)"><span class="fa fa-print"></span></button>
+        <button class="btn btn-sm btn-dark" onclick="BacktoPreviousPage()">Back</button>
+    </div>
+
+    <hr />
+</div>
+
+<div class="row body_thum">
+    <div id="printableArea">
+        <div class="receipt">
+            <div class="header">
+                <img src="@Model.CompanyInfoCRUDViewModel.Logo" alt="Logo">
+                <h2>@Model.CompanyInfoCRUDViewModel.Name</h2>
+                <p>@Model.CompanyInfoCRUDViewModel.Address</p>
+            </div>
+            <div class="details">
+                <p><strong>Invoice No:</strong> @Model.PaymentCRUDViewModel.InvoiceNo</p>
+                <p><strong>Date:</strong> @Model.PaymentCRUDViewModel.CreatedDate</p>
+                <p><strong>Name:</strong> @Model.PaymentCRUDViewModel.CustomerName</p>
+            </div>
+            <div class="items">
+                <partial name="_ThermalItem" />
+            </div>
+            <div class="totals">
+                <p><strong>GROSS TOTAL:</strong> @Model.PaymentCRUDViewModel.SubTotal</p>
+                <p>
+                    <strong>DISCOUNT (@Model.PaymentCRUDViewModel.Discount %):</strong>
+                    @Model.PaymentCRUDViewModel.DiscountAmount
+                </p>
+                <p><strong>VAT:</strong> @Model.PaymentCRUDViewModel.VATAmount</p>
+
+                <p><strong>GRAND TOTAL:</strong> @Model.PaymentCRUDViewModel.GrandTotal</p>
+                <p><strong>PAID:</strong> @Model.PaymentCRUDViewModel.PaidAmount</p>
+                <p><strong>CHANGE:</strong> @Model.PaymentCRUDViewModel.ChangedAmount</p>
+
+                <p><strong>DUE:</strong> @Model.PaymentCRUDViewModel.DueAmount</p>
+                <p><strong>PAYMENT METHOD:</strong> @Model.PaymentMode</p>
+            </div>
+
+            <div class="col-sm-12" id="divQRCode" align="center">
+            </div>
+        </div>
+        <br /><br />
+        <div class="header">
+            <p>Thank you!</p><br /><br /><hr />
+        </div>    
+    </div>
+</div>
+
+<link href="~/css/Thermal_Dev.css" rel="stylesheet" />
+<script src="~/js/Payment/PrintPOSInvoice.js"></script>
+<script src="~/lib/base64.min.js"></script>

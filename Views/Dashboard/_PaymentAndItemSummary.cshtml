@@ -1,0 +1,154 @@
+﻿@model BusinessERP.Models.DashboardViewModel.DashboardSummaryViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<div class="summary-cards-container">
+    <div class="row">
+        <!-- Invoice Today -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("Index", "Payment")" class="card-link">
+                <div class="summary-card card-blue">
+                    <div class="card-icon">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.InvoiceToday</h3>
+                        <p class="card-label">@localizer["Invoice Today"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Invoice This Month -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("Index", "Payment")" class="card-link">
+                <div class="summary-card card-green">
+                    <div class="card-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.InvoiceThisMonth</h3>
+                        <p class="card-label">@localizer["Invoice This Month"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Sales Today -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("TransactionByDay", "SalesReport")" class="card-link">
+                <div class="summary-card card-orange">
+                    <div class="card-icon">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.SalesToday</h3>
+                        <p class="card-label">@localizer["Sales Today"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Sales This Month -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("TransactionByMonth", "SalesReport")" class="card-link">
+                <div class="summary-card card-purple">
+                    <div class="card-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.SalesThisMonth</h3>
+                        <p class="card-label">@localizer["Sales This Month"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Total Items -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("Index", "Items")" class="card-link">
+                <div class="summary-card card-teal">
+                    <div class="card-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.TotalItem</h3>
+                        <p class="card-label">@localizer["Total Item"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Total Item Quantity -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("Index", "Items")" class="card-link">
+                <div class="summary-card card-indigo">
+                    <div class="card-icon">
+                        <i class="bi bi-boxes"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.TotalItemQuantity</h3>
+                        <p class="card-label">@localizer["Total Item Quantity"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Low Items -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("LowInStockItem", "Items")" class="card-link">
+                <div class="summary-card card-warning">
+                    <div class="card-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.LowItems</h3>
+                        <p class="card-label">@localizer["Low Items"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Out of Stock -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("OutofStockItem", "Items")" class="card-link">
+                <div class="summary-card card-red">
+                    <div class="card-icon">
+                        <i class="bi bi-x-circle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.OutofStock</h3>
+                        <p class="card-label">@localizer["Out of Stock"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Due Invoice -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <a href="@Url.Action("Index", "Payment")" class="card-link">
+                <div class="summary-card card-danger">
+                    <div class="card-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-number">@Model.DueInvoice</h3>
+                        <p class="card-label">@localizer["Due Invoice"]</p>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

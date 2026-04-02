@@ -1,0 +1,382 @@
+﻿@model BusinessERP.Models.ItemsViewModel.ItemsCRUDViewModel
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="frmItem">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="OldUnitPrice" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" asp-for="CreatedBy" />
+                <input type="hidden" id="CurrentURL" asp-for="CurrentURL" />
+
+                <div class="card card-primary card-outline card-tabs">
+                    <div class="card-header p-0 pt-1 border-bottom-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="BasicInfo" data-toggle="pill" href="#divBasicInfo"
+                                    role="tab" aria-controls="BasicInfo" aria-selected="true">Basic Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="OtherInfo" data-toggle="pill" href="#divOtherInfo" role="tab"
+                                    aria-controls="OtherInfo" aria-selected="true">Other Info</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="tab-content" id="tabContent">
+                            <div class="tab-pane fade show active" id="divBasicInfo" role="tabpanel"
+                                aria-labelledby="divBasicInfo">
+                                <div class="row">
+                                    <div class="col-6 col-sm-6">
+                                        <div class="form-group row">
+                                            <label asp-for="Name" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <textarea asp-for="Name" class="form-control" id="Name" type="text"
+                                                    rows="4"></textarea>
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="VatPercentage" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <select asp-for="VatPercentage" asp-items="@ViewBag.VatPercentageList"
+                                                    onchange="UpdateAllPriceVAT()" id="VatPercentage"
+                                                    class="form-control" style="width:100%;">
+                                                </select>
+                                                <span asp-validation-for="VatPercentage" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="CostPrice" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-5">
+                                                <input asp-for="CostPrice" class="form-control" id="CostPrice"
+                                                    onchange="updatePriceVAT('CostPrice', 'CostVAT');" type="number" />
+                                                <span asp-validation-for="CostPrice" class="text-danger"></span>
+                                            </div>
+                                            <label asp-for="CostVAT" class="col-sm-1 col-form-label"></label>
+                                            <div class="col-sm-3">
+                                                <input asp-for="CostVAT" class="form-control" id="CostVAT"
+                                                    type="number" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input type="checkbox" id="sameAsCostPrice" /> Same as Cost Price
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="NormalPrice" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-5">
+                                                <input asp-for="NormalPrice" class="form-control" id="NormalPrice"
+                                                    onchange="updatePriceVAT('NormalPrice', 'NormalVAT');"
+                                                    type="number" />
+                                                <span asp-validation-for="NormalPrice" class="text-danger"></span>
+                                            </div>
+                                            <label asp-for="NormalVAT" class="col-sm-1 col-form-label"></label>
+                                            <div class="col-sm-3">
+                                                <input asp-for="NormalVAT" class="form-control" id="NormalVAT"
+                                                    type="number" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="TradePrice" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-5">
+                                                <input asp-for="TradePrice" class="form-control" id="TradePrice"
+                                                    onchange="updatePriceVAT('TradePrice', 'TradeVAT');"
+                                                    type="number" />
+                                                <span asp-validation-for="TradePrice" class="text-danger"></span>
+                                            </div>
+                                            <label asp-for="TradeVAT" class="col-sm-1 col-form-label"></label>
+                                            <div class="col-sm-3">
+                                                <input asp-for="TradeVAT" class="form-control" id="TradeVAT"
+                                                    type="number" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="PremiumPrice" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-5">
+                                                <input asp-for="PremiumPrice" class="form-control" id="PremiumPrice"
+                                                    onchange="updatePriceVAT('PremiumPrice', 'PremiumVAT');"
+                                                    type="number" />
+                                                <span asp-validation-for="PremiumPrice" class="text-danger"></span>
+                                            </div>
+                                            <label asp-for="PremiumVAT" class="col-sm-1 col-form-label"></label>
+                                            <div class="col-sm-3">
+                                                <input asp-for="PremiumVAT" class="form-control" id="PremiumVAT"
+                                                    type="number" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="OtherPrice" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-5">
+                                                <input asp-for="OtherPrice" class="form-control" id="OtherPrice"
+                                                    onchange="updatePriceVAT('OtherPrice', 'OtherVAT');"
+                                                    type="number" />
+                                                <span asp-validation-for="OtherPrice" class="text-danger"></span>
+                                            </div>
+                                            <label asp-for="OtherVAT" class="col-sm-1 col-form-label"></label>
+                                            <div class="col-sm-3">
+                                                <input asp-for="OtherVAT" class="form-control" id="OtherVAT"
+                                                    type="number" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label asp-for="CategoriesId" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <select asp-for="CategoriesId" asp-items="@ViewBag.CategorieList"
+                                                    class="form-control" style="width:100%;" required>
+                                                    <option disabled selected>--- SELECT ---</option>
+                                                </select>
+                                                <span asp-validation-for="CategoriesId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Supplier Name</label>
+                                            <div class="col-sm-9">
+                                                <select asp-for="SupplierId" asp-items="@ViewBag.SupplierList"
+                                                    id="SupplierId" class="form-control" style="width:100%;">
+                                                    <option disabled selected>--- SELECT ---</option>
+                                                </select>
+                                                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Warehouse</label>
+                                            <div class="col-sm-9">
+                                                <select asp-for="WarehouseId" asp-items="@ViewBag.WarehouseList"
+                                                    id="WarehouseId" class="form-control" style="width:100%;">
+                                                    <option disabled selected>--- SELECT ---</option>
+                                                </select>
+                                                <span asp-validation-for="WarehouseId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 col-sm-6">
+                                        <div class="form-group row">
+                                            <label asp-for="Code" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-5">
+                                                <input asp-for="Code" class="form-control" id="Code" type="text" />
+                                                <span asp-validation-for="Code" class="text-danger"></span>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="button" value="Update Barcode" onclick="UpdateBarcode()"
+                                                    class="btn btn-sm btn-info" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="Quantity" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input asp-for="Quantity" class="form-control" id="Quantity"
+                                                    type="text" />
+                                                <span asp-validation-for="Quantity" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="Barcode" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <img src="@Model.Barcode" alt="" id="Barcode" />
+                                                <span asp-validation-for="Barcode" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Change Image</label>
+                                            <div class="col-sm-9">
+                                                <span class="control-fileupload">
+                                                    <label for="file">Choose a file :</label>
+                                                    <input type="file" asp-for="ImageURLDetails" id="ImageURLDetails"
+                                                        onchange="displayThumbnail('ImageURLDetails', 'Thumbnail_Displayed_Product')" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <img src="@Model.ImageURL" class="img-circle elevation-2 imgCustom150px"
+                                                    alt="" id="Thumbnail_Displayed_Product" />
+                                                <span asp-validation-for="ImageURL" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="divOtherInfo" role="tabpanel"
+                                aria-labelledby="divOtherInfoTab">
+                                <div class="row">
+                                    <div class="col-6 col-sm-6">
+                                        <div class="form-group row">
+                                            <label asp-for="Size" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <select asp-for="Size" id="Size" class="form-control">
+                                                    <option value="1">None</option>
+                                                    <option value="12">Bag</option>
+                                                    <option value="25">Dozen</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="MeasureId" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-4">
+                                                <select asp-for="MeasureId" asp-items="@ViewBag.UnitsofMeasureList"
+                                                    id="MeasureId" class="form-control" style="width:100%;">
+                                                    <option disabled selected>--- SELECT ---</option>
+                                                </select>
+                                                <span asp-validation-for="MeasureId" class="text-danger"></span>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Value</label>
+                                            <div class="col-sm-3">
+                                                <input asp-for="MeasureValue" id="MeasureValue" class="form-control"
+                                                    type="number" min="1" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="ManufactureDate" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input asp-for="ManufactureDate" id="ManufactureDate"
+                                                    class="form-control" type="date" />
+                                                <span asp-validation-for="ManufactureDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="ExpirationDate" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input asp-for="ExpirationDate" id="ExpirationDate" class="form-control"
+                                                    type="date" />
+                                                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 col-sm-6">
+                                        <div class="form-group row">
+                                            <label asp-for="StockKeepingUnit" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input asp-for="StockKeepingUnit" class="form-control" type="text" />
+                                                <span asp-validation-for="StockKeepingUnit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="ProductLevel" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input asp-for="ProductLevel" class="form-control" type="text" />
+                                                <span asp-validation-for="ProductLevel" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="Note" class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <textarea asp-for="Note" class="form-control" type="text" rows="4"></textarea>
+                                                <span asp-validation-for="Note" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="button" id="btnSave" value="Save" onclick="Save()" class="btn btn-info">
+                                <button type="button" id="btnClose" class="btn btn-danger"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    $('#CurrentURL').val(window.location.pathname);
+    $(document).ready(function () {
+        $("#VatPercentage").select2();
+        $("#CategoriesId").select2();
+        $("#SupplierId").select2();
+        $("#WarehouseId").select2();
+        $("#MeasureId").select2();
+
+        $('#sameAsCostPrice').change(function () {
+            if ($(this).is(':checked')) {
+                var costPrice = $('#CostPrice').val();
+                var _CostVAT = $('#CostVAT').val();
+                $('#NormalPrice, #TradePrice, #PremiumPrice, #OtherPrice').val(costPrice);
+                $('#NormalVAT, #TradeVAT, #PremiumVAT, #OtherVAT').val(_CostVAT);
+            } else {
+                $('#NormalPrice, #TradePrice, #PremiumPrice, #OtherPrice').val('');
+                $('#NormalVAT, #TradeVAT, #PremiumVAT, #OtherVAT').val('');
+            }
+        });
+    });
+
+    var _Code = $("#Code").val();
+    $("#Barcode").JsBarcode(_Code, {
+        width: 2,
+        height: 80,
+        displayValue: true,
+        fontOptions: "",
+        //font: "monospace",
+        text: undefined,
+        textAlign: "center",
+        textPosition: "bottom",
+        textMargin: 2,
+        fontSize: 15,
+        background: "#ffffff",
+        lineColor: "#000000",
+        margin: 10,
+        marginTop: undefined,
+        marginBottom: undefined,
+        marginLeft: undefined,
+        marginRight: undefined,
+        valid: function valid() { }
+    });
+
+    var updatePriceVAT = function (priceId, vatId) {
+        var priceValue = parseFloat($("#" + priceId).val());
+        if (!isNaN(priceValue) && priceValue >= 0) {
+            var result = VATCalc(priceValue);
+            $("#" + vatId).val(result.toFixed(2));
+        } else {
+            $("#" + vatId).val('');
+        }
+    };
+
+    var VATCalc = function (price) {
+        var vatPercentage = parseFloat($("#VatPercentage").val());
+        if (isNaN(vatPercentage)) {
+            vatPercentage = 0; // Default to 0% if VAT percentage is invalid
+        }
+        return (vatPercentage / 100) * price;
+    };
+
+    var UpdateAllPriceVAT = function () {
+        updatePriceVAT('CostPrice', 'CostVAT');
+        updatePriceVAT('NormalPrice', 'NormalVAT');
+        updatePriceVAT('TradePrice', 'TradeVAT');
+        updatePriceVAT('PremiumPrice', 'PremiumVAT');
+        updatePriceVAT('OtherPrice', 'OtherVAT');
+    };
+
+</script>
