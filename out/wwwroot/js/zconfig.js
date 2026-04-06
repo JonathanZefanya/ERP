@@ -12,19 +12,19 @@ var DemoUserAccountLockAll = function () {
     }
 }
 
-var SetHeaderElements = function (ElementName) {
-    if (IsAddress == 1) {
-        var _WhatsAppElement = WhatsAppElement();
-        var _BuyNowElement = BuyNowElement();
-        $('#' + ElementName).empty().append(_BuyNowElement + _WhatsAppElement);
-    }
-}
+// var SetHeaderElements = function (ElementName) {
+//     if (IsAddress == 1) {
+//         var _WhatsAppElement = WhatsAppElement();
+//         var _BuyNowElement = BuyNowElement();
+//         $('#' + ElementName).empty().append(_BuyNowElement + _WhatsAppElement);
+//     }
+// }
 
 // var SetLoginInfo = function (divName) {
 //     if (IsAddress == 1) {
 //         var _GetLoginInfoElement = GetLoginInfoElement();
-//         // var _GetContactDetails = GetContactDetails();
-//         // $('#' + divName).empty().append(_GetLoginInfoElement + _GetContactDetails);
+//         var _GetContactDetails = GetContactDetails();
+//         $('#' + divName).empty().append(_GetLoginInfoElement + _GetContactDetails);
 //     }
 // }
 
@@ -71,19 +71,19 @@ var SetHeaderElements = function (ElementName) {
 //     return elements;
 // }
 
-var WhatsAppElement = function () {
-    var elements = '';
-    elements = '<span>📲 WhatsApp: </span><a href="https://wa.me/8801674411603" target="_blank">8801674411603</a>';
-    return elements;
-}
+// var WhatsAppElement = function () {
+//     var elements = '';
+//     elements = '<span>📲 WhatsApp: </span><a href="https://wa.me/8801674411603" target="_blank">8801674411603</a>';
+//     return elements;
+// }
 
-var BuyNowElement = function () {
-    var elements = '';
-    elements += '<a href="' + AppPurchaseURL + '" target="_blank">'
-        + '<img src="/images/dashboard/buynow.png" class="imgCustom150px" alt="User Image">'
-        + '</a>';
-    return elements;
-}
+// var BuyNowElement = function () {
+//     var elements = '';
+//     elements += '<a href="' + AppPurchaseURL + '" target="_blank">'
+//         + '<img src="/images/dashboard/buynow.png" class="imgCustom150px" alt="User Image">'
+//         + '</a>';
+//     return elements;
+// }
 
 var CopyToClipboard = function (Element) {
     var _Element = $('#' + Element.id).html();

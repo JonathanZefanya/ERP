@@ -623,9 +623,15 @@ namespace BusinessERP.Services
         {
             SharedUIDataViewModel _SharedUIDataViewModel = new();
             ApplicationUser _ApplicationUser = await _userManager.GetUserAsync(_ClaimsPrincipal);
-            _SharedUIDataViewModel.UserProfile = _context.UserProfile.FirstOrDefault(x => x.ApplicationUserId.Equals(_ApplicationUser.Id));
-            _SharedUIDataViewModel.MainMenuViewModel = await _roles.RolebaseMenuLoad(_ApplicationUser);
             _SharedUIDataViewModel.ApplicationInfo = _applicationInfo;
+
+            if (_ApplicationUser == null)
+            {
+                return _SharedUIDataViewModel;
+            }
+
+            _SharedUIDataViewModel.UserProfile = _context.UserProfile.FirstOrDefault(x => x.ApplicationUserId == _ApplicationUser.Id);
+            _SharedUIDataViewModel.MainMenuViewModel = await _roles.RolebaseMenuLoad(_ApplicationUser);
             return _SharedUIDataViewModel;
         }
         public async Task<DefaultIdentityOptions> GetDefaultIdentitySettings()

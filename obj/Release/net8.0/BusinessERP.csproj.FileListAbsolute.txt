@@ -542,3 +542,4 @@ D:\ERP\ERP\obj\Release\net8.0\refint\BusinessERP.dll
 D:\ERP\ERP\obj\Release\net8.0\BusinessERP.pdb
 D:\ERP\ERP\obj\Release\net8.0\BusinessERP.genruntimeconfig.cache
 D:\ERP\ERP\obj\Release\net8.0\ref\BusinessERP.dll
+D:\ERP\ERP\obj\Release\net8.0\BusinessERP.sourcelink.json

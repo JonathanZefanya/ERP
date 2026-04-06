@@ -61,12 +61,20 @@ builder.Services.AddAuthentication(IISDefaults.AuthenticationScheme);
 //Set Identity Options
 DefaultIdentityOptions _DefaultIdentityOptions = null;
 var _context = ProgramTaskExtension.GetDBContextInstance(builder.Services);
-bool IsDBCanConnect = _context.Database.CanConnect();
-if (IsDBCanConnect && _context.DefaultIdentityOptions.Count() > 0)
+try
 {
-    _DefaultIdentityOptions = _context.DefaultIdentityOptions.Where(x => x.Id == 1).FirstOrDefault();
+    bool IsDBCanConnect = _context.Database.CanConnect();
+    if (IsDBCanConnect && _context.DefaultIdentityOptions.Any())
+    {
+        _DefaultIdentityOptions = _context.DefaultIdentityOptions.Where(x => x.Id == 1).FirstOrDefault();
+    }
 }
-else
+catch
+{
+    // Fallback to configuration when DB is not initialized yet.
+}
+
+if (_DefaultIdentityOptions == null)
 {
     IConfigurationSection _IConfigurationSection = builder.Configuration.GetSection("IdentityDefaultOptions");
     builder.Services.Configure<DefaultIdentityOptions>(_IConfigurationSection);
