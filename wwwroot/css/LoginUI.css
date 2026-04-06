@@ -1060,6 +1060,89 @@ body {
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
+.language-menu-shell {
+    position: relative;
+    display: block;
+}
+
+.language-menu-trigger {
+    min-width: 220px;
+    justify-content: center;
+    user-select: none;
+}
+
+.language-menu-trigger.dropdown-toggle::after {
+    display: none;
+}
+
+.language-current-code {
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.language-menu-caret {
+    margin-left: 2px;
+    font-size: 12px !important;
+    transition: transform 0.2s ease;
+}
+
+.language-menu-shell.show .language-menu-caret {
+    transform: rotate(180deg);
+}
+
+.language-menu-dropdown {
+    min-width: 220px;
+    background: rgba(9, 31, 66, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    margin-top: 10px;
+}
+
+.language-menu-form {
+    margin: 0;
+}
+
+.language-menu-item {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none !important;
+    outline: none;
+    width: 100%;
+    border-radius: 10px;
+    padding: 9px 10px;
+    background: transparent !important;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.language-menu-item:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    transform: translateX(-2px);
+}
+
+.language-menu-item.active {
+    background: rgba(255, 255, 255, 0.24) !important;
+}
+
+.language-menu-code {
+    font-size: 14px;
+    font-weight: 800;
+}
+
 /* Decorative Elements */
 .deco-circle {
     position: absolute;
@@ -1116,5 +1199,23 @@ body {
     .btn-language {
         padding: 10px 20px;
         font-size: 13px;
+    }
+
+    .language-menu-trigger {
+        min-width: 170px;
+        padding: 10px 16px;
+        gap: 8px;
+        border-radius: 12px;
+    }
+
+    .language-menu-dropdown {
+        min-width: 170px;
+        margin-top: 8px;
+        padding: 6px;
+    }
+
+    .language-menu-item {
+        padding: 8px 8px;
+        font-size: 12px;
     }
 }

@@ -8,20 +8,65 @@
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var currentCultureName = requestCulture?.RequestCulture.UICulture.Name ?? "en";
+    var currentCultureCode = requestCulture?.RequestCulture.UICulture.TwoLetterISOLanguageName.ToUpperInvariant() ?? "EN";
+    var selectorMode = (ViewData["CultureSelectorMode"] as string ?? string.Empty).ToLowerInvariant();
     var cultureItems = LocOptions.Value.SupportedUICultures
-    .Select(c => new SelectListItem { Value = c.Name, Text = Localizer.GetString(c.Name) })
+    .Select(c => new SelectListItem { Value = c.Name, Text = c.TwoLetterISOLanguageName.ToUpperInvariant() })
     .ToList();
     var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" :
     $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
 }
 
-<div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
-    <form id="selectLanguage" asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl"
-        method="post" class="" role="form">
-        <div class="form-group pull-right">
-            <select name="culture" onchange="this.form.submit();"
-                asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems">
-            </select>&nbsp
+@if (selectorMode == "login-menu")
+{
+    <div class="dropdown language-menu-shell" title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
+        <button type="button" class="btn btn-language language-menu-trigger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="@Localizer["Select language"]">
+            <i class="fas fa-globe" aria-hidden="true"></i>
+            <span>@Localizer["Language"]</span>
+            <span class="language-current-code">@currentCultureCode</span>
+            <i class="fas fa-chevron-down language-menu-caret" aria-hidden="true"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right language-menu-dropdown" aria-label="@Localizer["Language options"]">
+            @foreach (var item in cultureItems)
+            {
+                var isCurrent = string.Equals(item.Value, currentCultureName, StringComparison.OrdinalIgnoreCase);
+                <form asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl" method="post" class="language-menu-form" role="none">
+                    <input type="hidden" name="culture" value="@item.Value" />
+                    <button type="submit" class="dropdown-item language-menu-item @(isCurrent ? "active" : string.Empty)" role="menuitem" aria-current="@(isCurrent ? "true" : "false")">
+                        <span class="language-menu-code">@item.Text</span>
+                        @if (isCurrent)
+                        {
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                        }
+                    </button>
+                </form>
+            }
         </div>
-    </form>
-</div>
+    </div>
+}
+else
+{
+    <div class="dropdown language-header-shell" title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
+        <button type="button" class="btn language-header-trigger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="@Localizer["Select language"]">
+            <i class="fas fa-globe" aria-hidden="true"></i>
+            <span class="language-header-code">@currentCultureCode</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right language-header-dropdown" aria-label="@Localizer["Language options"]">
+            @foreach (var item in cultureItems)
+            {
+                var isCurrent = string.Equals(item.Value, currentCultureName, StringComparison.OrdinalIgnoreCase);
+                <form asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl" method="post" class="language-header-form" role="none">
+                    <input type="hidden" name="culture" value="@item.Value" />
+                    <button type="submit" class="dropdown-item language-header-item @(isCurrent ? "active" : string.Empty)" role="menuitem" aria-current="@(isCurrent ? "true" : "false")">
+                        <span class="language-header-item-code">@item.Text</span>
+                        @if (isCurrent)
+                        {
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                        }
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+}

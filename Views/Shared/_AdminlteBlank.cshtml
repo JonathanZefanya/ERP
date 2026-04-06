@@ -71,11 +71,10 @@
 
                 <!-- Language Selector -->
                 <div class="language-selector">
-                    <button class="btn btn-language">
-                        <i class="fas fa-globe"></i>
-                        <span>@localizer["Language"]</span>
-                    </button>
-                    @await Html.PartialAsync("_CulturePartial")
+                    @await Html.PartialAsync("_CulturePartial", viewData: new ViewDataDictionary(ViewData)
+                    {
+                        ["CultureSelectorMode"] = "login-menu"
+                    })
                 </div>
 
                 <!-- Main Content -->

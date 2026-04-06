@@ -317,32 +317,110 @@
    ============================================ */
 
 .language-selector-header {
-    margin: 0;
+    margin: 0 !important;
     padding: 0;
 }
 
-.language-selector-header select {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    border: none;
-    border-radius: 12px;
-    color: #ffffff;
-    padding: 10px 20px;
+.language-selector-header .language-header-shell {
+    margin: 0;
+}
+
+.language-selector-header .language-header-trigger {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #d6e2ff;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f8fbff 0%, #edf3ff 100%);
+    color: #1f2937;
+    padding: 8px 12px;
+    min-width: 78px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-right: 10px;
     font-size: 15px;
     font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(79, 172, 254, 0.4);
-    margin-right: 10px;
+    line-height: 1;
+    letter-spacing: 0.4px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 2px 8px rgba(53, 99, 233, 0.12);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.language-selector-header select:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 24px rgba(79, 172, 254, 0.5);
+.language-selector-header .language-header-trigger.dropdown-toggle::after {
+    display: none;
 }
 
-.language-selector-header select:focus {
+.language-selector-header .language-header-trigger:hover {
+    border-color: #afc3f8;
+    box-shadow: 0 4px 12px rgba(53, 99, 233, 0.16);
+    transform: translateY(-1px);
+}
+
+.language-selector-header .language-header-trigger:focus {
     outline: none;
-    box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.3);
+    border-color: #3563e9;
+    box-shadow: 0 0 0 3px rgba(53, 99, 233, 0.2);
+}
+
+.language-selector-header .language-header-trigger i:first-child {
+    color: #3563e9;
+    font-size: 15px;
+}
+
+.language-selector-header .language-header-code {
+    font-weight: 800;
+}
+
+.language-selector-header .language-header-caret {
+    font-size: 12px;
+    color: #334155;
+    transition: transform 0.2s ease;
+}
+
+.language-selector-header .language-header-shell.show .language-header-caret {
+    transform: rotate(180deg);
+}
+
+.language-selector-header .language-header-dropdown {
+    min-width: 94px;
+    padding: 6px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid #d6e2ff;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+}
+
+.language-selector-header .language-header-form {
+    margin: 0;
+}
+
+.language-selector-header .language-header-item {
+    border: none !important;
+    border-radius: 8px;
+    background: transparent !important;
+    color: #1f2937 !important;
+    padding: 8px 8px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 1;
+}
+
+.language-selector-header .language-header-item:hover {
+    background: #edf3ff !important;
+}
+
+.language-selector-header .language-header-item.active {
+    background: #dbe8ff !important;
+    color: #12327a !important;
+}
+
+.language-selector-header .language-header-item-code {
+    letter-spacing: 0.4px;
 }
 
 /* ============================================
@@ -435,6 +513,39 @@
     
     .btn-signout-header {
         padding: 10px 14px;
+    }
+
+    .language-selector-header .language-header-trigger {
+        min-width: 70px;
+        padding: 8px 10px;
+        font-size: 14px;
+        margin-right: 6px;
+    }
+
+    .language-selector-header .language-header-dropdown {
+        min-width: 86px;
+    }
+}
+
+@media (max-width: 576px) {
+    .language-selector-header .language-header-trigger {
+        min-width: 52px;
+        padding: 7px 8px;
+        font-size: 13px;
+        margin-right: 4px;
+    }
+
+    .language-selector-header .language-header-trigger i:first-child {
+        font-size: 12px;
+    }
+
+    .language-selector-header .language-header-caret {
+        font-size: 10px;
+    }
+
+    .language-selector-header .language-header-dropdown {
+        min-width: 76px;
+        padding: 4px;
     }
 }
 
