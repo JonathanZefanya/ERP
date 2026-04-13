@@ -30,8 +30,8 @@ Ensure you have the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.
 1.  **Clone the Repository**
 
     ```bash
-    git clone https://github.com/username/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/jonathanzefanya/ERP.git
+    cd ERP
     ```
 
 2.  **Database Configuration**
