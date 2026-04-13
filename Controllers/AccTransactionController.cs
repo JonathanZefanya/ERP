@@ -36,7 +36,7 @@ namespace BusinessERP.Controllers
         {
             try
             {
-                //var _GetDataTabelData = _iCommon.GetAllAccTransaction();
+                // var _GetDataTabelData = _iCommon.GetAllAccTransaction();
                  IQueryable<AccTransactionCRUDViewModel> _GetDataTabelData;
                 if (IsFilterData)
                 {
